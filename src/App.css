@@ -1,0 +1,8 @@
+body {
+    font-family: SF Pro Text, sans-serif;
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: local('SF-Pro'), url("assets/fonts/SF-Pro.ttf") format('truetype');
+}
