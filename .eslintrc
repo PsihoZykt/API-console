@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "react-app",
+    "airbnb",
+    "airbnb/hooks",
+    "prettier"
+  ],
+  "rules": {
+    "jsx-quotes": [
+      1,
+      "prefer-double"
+    ]
+  },
+  "plugins": [
+    "prettier"
+  ]
+}
