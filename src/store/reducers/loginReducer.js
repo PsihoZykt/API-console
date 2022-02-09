@@ -6,7 +6,7 @@ const initialState = {
   isLoading: false,
 }
 
-export default function appReducer(state = [], action) {
+export default function loginReducer(state = initialState, action) {
   switch (action.type) {
     case 'SET_AUTH_RESULT': {
       return {
@@ -22,5 +22,18 @@ export default function appReducer(state = [], action) {
     }
     default:
       return state
+  }
+}
+
+export const setIsLoading = (isLoading) => {
+  return {
+    type: 'SET_IS_LOADING',
+    isLoading: isLoading,
+  }
+}
+export const setAuthResult = (authResult) => {
+  return {
+    type: 'SET_AUTH_RESULT',
+    authResult: authResult,
   }
 }

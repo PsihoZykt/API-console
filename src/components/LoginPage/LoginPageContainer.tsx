@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
-import { auth } from 'api/sendsay'
 import LoginPage from './LoginPage'
+import { onAuth } from '../../store/thunks/login'
 
-const LoginPageContainer = ({ login, sublogin, password }: any) => {
-  const [authResult, setAuthResult] = useState({
-    isError: false,
-    res: { id: '', explain: '', request: {} },
-  })
-  const [isLoading, setIsLoading] = useState(false)
+const LoginPageContainer = ({
+  login,
+  sublogin,
+  password,
+  isLoading,
+  authResult,
+  onAuth,
+}: any) => {
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -20,15 +22,11 @@ const LoginPageContainer = ({ login, sublogin, password }: any) => {
     }
   }, [navigate])
 
-  const submit = async (e: any) => {
+  const submit = (e: any) => {
     e.preventDefault()
-    setIsLoading(true)
-    console.log(isLoading)
-
-    const res = await auth(login, sublogin, password)
-    setAuthResult(res)
-    setIsLoading(false)
-    if (!res.isError) navigate('/console')
+    onAuth(login, sublogin, password).then(() => {
+      if (!authResult.isError) navigate('/console')
+    })
   }
   return (
     <LoginPage submit={submit} authResult={authResult} isLoading={isLoading} />
@@ -36,13 +34,24 @@ const LoginPageContainer = ({ login, sublogin, password }: any) => {
 }
 
 const selector = formValueSelector('login')
-export default connect((state) => {
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    onAuth: (login: any, sublogin: any, password: any) =>
+      dispatch(onAuth(login, sublogin, password)),
+  }
+}
+export default connect((state: any) => {
   const login = selector(state, 'login')
   const sublogin = selector(state, 'sublogin')
   const password = selector(state, 'password')
+  const isLoading = state.loginPage.isLoading
+  const authResult = state.loginPage.authResult
+
   return {
     login,
     sublogin,
     password,
+    isLoading,
+    authResult,
   }
-})(LoginPageContainer)
+}, mapDispatchToProps)(LoginPageContainer)
