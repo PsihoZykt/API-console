@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import './LoginPage.css'
-import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
-import { auth } from '../../api/sendsay'
+import { auth } from 'api/sendsay'
 import LoginPage from './LoginPage'
 
-let LoginPageContainer = ({ login, sublogin, password }) => {
+const LoginPageContainer = ({ login, sublogin, password }: any) => {
   const [authResult, setAuthResult] = useState({
     isError: false,
     res: { id: '', explain: '', request: {} },
@@ -21,7 +20,7 @@ let LoginPageContainer = ({ login, sublogin, password }) => {
     }
   }, [navigate])
 
-  const submit = async (e) => {
+  const submit = async (e: any) => {
     e.preventDefault()
     setIsLoading(true)
     console.log(isLoading)
@@ -37,7 +36,7 @@ let LoginPageContainer = ({ login, sublogin, password }) => {
 }
 
 const selector = formValueSelector('login')
-LoginPageContainer = connect((state) => {
+export default connect((state) => {
   const login = selector(state, 'login')
   const sublogin = selector(state, 'sublogin')
   const password = selector(state, 'password')
@@ -47,15 +46,3 @@ LoginPageContainer = connect((state) => {
     password,
   }
 })(LoginPageContainer)
-
-LoginPageContainer.propTypes = {
-  login: PropTypes.string,
-  sublogin: PropTypes.string,
-  password: PropTypes.string,
-}
-LoginPageContainer.defaultProps = {
-  login: '',
-  sublogin: '',
-  password: '',
-}
-export default LoginPageContainer

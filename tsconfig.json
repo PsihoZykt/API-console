@@ -1,0 +1,48 @@
+//{
+//  "compilerOptions": {
+//    "baseUrl": "src",
+//    "jsx": "react",
+//    "esModuleInterop": true
+//  },
+//  "include": [
+//    "src",
+//    "src/components",
+//    "src/custom.d.ts"
+//  ]
+//}
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "jsx": "react",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "baseUrl": "src",
+    "paths": {
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@static/*": [
+        "src/static/*"
+      ]
+    },
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "include": [
+    "src",
+    "custom.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}

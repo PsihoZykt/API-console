@@ -1,13 +1,17 @@
-import { Field, reduxForm } from 'redux-form'
 import React from 'react'
-import PropTypes from 'prop-types'
-import FormError from './FormError/FormError'
+import { Field, reduxForm } from 'redux-form'
+import FormError from 'components/LoginPage/LoginForm/FormError/FormError'
 import './LoginForm.css'
-import renderField from './RenderField/RenderField'
+import Loader from 'common/Loader/Loader'
 import validate from '../../../validators/loginPage/validate'
-import Loader from '../../../common/Loader/Loader'
+import renderField from './RenderField/RenderField'
 
-let LoginForm = ({ handleSubmit, submitting, authResult, isLoading }) => (
+const LoginForm = ({
+  handleSubmit,
+  submitting,
+  authResult,
+  isLoading,
+}: any) => (
   <form onSubmit={handleSubmit} className="login-form">
     <div className="login-form__header">API-консолька</div>
     {authResult.isError && <FormError error={authResult.res} />}
@@ -34,25 +38,7 @@ let LoginForm = ({ handleSubmit, submitting, authResult, isLoading }) => (
   </form>
 )
 
-LoginForm = reduxForm({
+export default reduxForm<unknown, any>({
   form: 'login',
   validate,
 })(LoginForm)
-
-LoginForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool,
-  authResult: PropTypes.shape({
-    isError: PropTypes.bool,
-    res: PropTypes.shape({
-      id: PropTypes.string,
-      explain: PropTypes.string,
-      request: PropTypes.object,
-    }),
-  }).isRequired,
-  isLoading: PropTypes.bool.isRequired,
-}
-LoginForm.defaultProps = {
-  submitting: false,
-}
-export default LoginForm

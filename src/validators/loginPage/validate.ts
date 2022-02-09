@@ -1,5 +1,15 @@
-const validate = (values) => {
-  const errors = {}
+const validate = (values: {
+  login: string,
+  sublogin: string,
+  password: string,
+}) => {
+  interface Errors {
+    login?: string;
+    sublogin?: string;
+    password?: string;
+  }
+
+  const errors: Errors = {}
   if (!values.login) {
     errors.login = 'Required'
   } else if (

@@ -1,12 +1,18 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import formError from '../../../../assets/img/loginPage/meh.svg'
 import './FormError.css'
+import { ReactSVG } from 'react-svg'
 
-const FormError = ({ error: { id, explain } }) => (
+interface IProps {
+  error: {
+    id: string,
+    explain: object,
+  };
+}
+
+const FormError = ({ error: { id, explain } }: IProps) => (
   <div className="form-error">
     <div className="form-error__img">
-      <img src={formError} alt="Sad face" />
+      <ReactSVG src="assets/img/loginPage/meh.svg" />
     </div>
     <div>
       <div className="form-error__header">Вход не вышел</div>
@@ -14,8 +20,5 @@ const FormError = ({ error: { id, explain } }) => (
     </div>
   </div>
 )
-FormError.propTypes = {
-  error: PropTypes.shape({ id: PropTypes.string, explain: PropTypes.string })
-    .isRequired,
-}
+
 export default FormError
