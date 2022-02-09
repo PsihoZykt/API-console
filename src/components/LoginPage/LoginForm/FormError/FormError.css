@@ -1,0 +1,22 @@
+.form-error {
+    background: rgba(207, 44, 0, 0.1);
+    border-radius: 5px;
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.form-error__header {
+    font-size: 18px;
+    line-height: 30px;
+    color: #CF2C00;
+}
+
+.form-error__text {
+    font-size: 12px;
+    line-height: 20px;
+    opacity: 0.5;
+    color: #CF2C00;
+
+}
