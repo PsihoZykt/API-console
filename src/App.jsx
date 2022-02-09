@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import store from './store/store'
 import ConsolePage from './components/ConsolePage/ConsolePage'
-import LoginPage from './components/LoginPage/LoginPage'
+import LoginPage from './components/LoginPage/LoginPageContainer'
 
 const App = () => (
   <div className="App">
