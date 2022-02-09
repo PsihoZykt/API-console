@@ -1,25 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './LoginPage.css'
-import { Field, reduxForm } from 'redux-form'
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { formValueSelector } from 'redux-form'
 import logo from '../../assets/img/loginPage/logo.svg'
-import auth from '../../api/sendsay'
+import { auth } from '../../api/sendsay'
+import LoginForm from './LoginForm/LoginForm'
+// import { auth } from '../../api/sendsay'
 
-const LoginPage = () => {
-  const formValues = useSelector((state) => state.form?.login?.values)
+let LoginPage = ({ login, sublogin, password }) => {
+  const [submitResult, setSubmitResult] = useState({
+    isError: false,
+    res: { id: '', explain: '', request: {} },
+  })
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (localStorage.getItem('sendsay_session')) {
+      navigate('/console')
+    }
+  }, [navigate])
+
   const submit = async (e) => {
     e.preventDefault()
-    const { login } = formValues
-    const { sublogin } = formValues
-    const { password } = formValues
     const res = await auth(login, sublogin, password)
-    await localStorage.setItem('sendsay_id', res.list['about.id'])
+    setSubmitResult(res)
   }
   return (
     <div className="login-page">
       <img src={logo} alt="circle, rectangle, circle, parallelogram" />
-      <LoginForm handleSubmit={submit} />
+      <LoginForm submitResult={submitResult} handleSubmit={submit} />
       <div className="github-link">
         https://github.com/PsihoZykt/API-console1
       </div>
@@ -27,36 +38,26 @@ const LoginPage = () => {
   )
 }
 
-let LoginForm = ({ handleSubmit }) => (
-  <form onSubmit={handleSubmit} className="login-form">
-    <div className="login-form__header">API-консолька</div>
-    <label htmlFor="login">
-      Логин
-      <Field component="input" type="text" name="login" />
-    </label>
+const selector = formValueSelector('login')
+LoginPage = connect((state) => {
+  const login = selector(state, 'login')
+  const sublogin = selector(state, 'sublogin')
+  const password = selector(state, 'password')
+  return {
+    login,
+    sublogin,
+    password,
+  }
+})(LoginPage)
 
-    <label className="login-form__sublogin" htmlFor="sublogin">
-      Сублогин
-      <span className="login-form__sublogin_optional"> Опционально </span>
-      <Field component="input" type="text" name="sublogin" />
-    </label>
-
-    <label htmlFor="password">
-      Пароль
-      <Field component="input" type="password" name="password" />
-    </label>
-
-    <button type="submit" className="login-form__submit">
-      Войти
-    </button>
-  </form>
-)
-
-LoginForm = reduxForm({
-  form: 'login',
-})(LoginForm)
-
-LoginForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
+LoginPage.propTypes = {
+  login: PropTypes.string,
+  sublogin: PropTypes.string,
+  password: PropTypes.string,
+}
+LoginPage.defaultProps = {
+  login: '',
+  sublogin: '',
+  password: '',
 }
 export default LoginPage

@@ -1,11 +1,29 @@
 import Sendsay from 'sendsay-api'
 
-const getInstance = (login, sublogin, password) =>
-  new Sendsay({ auth: { login, sublogin, password } })
+const auth = async (login, sublogin, password) => {
+  const sendsay = new Sendsay()
+  try {
+    const res = await sendsay.request({
+      action: 'login',
+      login,
+      sublogin,
+      passwd: password,
+    })
+    localStorage.setItem('sendsay_session', res.session)
+    return { isError: false, res }
+  } catch (e) {
+    return { isError: true, res: e }
+  }
+}
 
-const auth = (login, sublogin, password) =>
-  getInstance(login, sublogin, password).request({
+const test = async () => {
+  const sendsay2 = new Sendsay()
+
+  const res = await sendsay2.request({
     action: 'sys.settings.get',
-    list: ['about.id'],
+    session: localStorage.getItem('sendsay_session'),
   })
-export default auth
+
+  console.log(res)
+}
+export { auth, test }
