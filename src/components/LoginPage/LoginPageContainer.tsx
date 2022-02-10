@@ -5,6 +5,10 @@ import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
 import LoginPage from './LoginPage'
 import { signIn } from '../../store/thunks/login'
+import {
+  getAuthResult,
+  getIsLoading,
+} from '../../store/selectors/loginPage/selector'
 
 const LoginPageContainer = ({
   login,
@@ -41,8 +45,8 @@ export default connect(
     const login = selector(state, 'login')
     const sublogin = selector(state, 'sublogin')
     const password = selector(state, 'password')
-    const isLoading = state.loginPage.isLoading
-    const authResult = state.loginPage.authResult
+    const isLoading = getIsLoading(state)
+    const authResult = getAuthResult(state)
 
     return {
       login,
