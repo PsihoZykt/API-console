@@ -9,6 +9,7 @@ import {
   getAuthResult,
   getIsLoading,
 } from '../../store/selectors/loginPage/selector'
+import { authWithSession } from '../../api/sendsay'
 
 const LoginPageContainer = ({
   login,
@@ -17,12 +18,16 @@ const LoginPageContainer = ({
   isLoading,
   authResult,
   signIn,
+  setAuthResult,
 }: any) => {
   const navigate = useNavigate()
   console.log(authResult)
   useEffect(() => {
     if (localStorage.getItem('sendsay_session')) {
-      navigate('/console')
+      authWithSession().then((res) => {
+        setAuthResult(res)
+        navigate('/console')
+      })
     }
   }, [navigate])
 
