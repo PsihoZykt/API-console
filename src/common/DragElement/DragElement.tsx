@@ -1,8 +1,8 @@
 import React from 'react'
 import './DragElement.css'
-const DragElement = () => {
+const DragElement = ({ className }: any) => {
   return (
-    <div className="drag-element">
+    <div className={`${className} drag-element`}>
       <div className="drag-element_circle" />
       <div className="drag-element_circle" />
       <div className="drag-element_circle" />

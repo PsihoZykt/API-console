@@ -10,6 +10,7 @@ import {
   getIsLoading,
 } from '../../store/selectors/loginPage/selector'
 import { authWithSession } from '../../api/sendsay'
+import { createSetAuthResultAction } from '../../store/actionCreators/login'
 
 const LoginPageContainer = ({
   login,
@@ -29,15 +30,16 @@ const LoginPageContainer = ({
         navigate('/console')
       })
     }
-  }, [navigate])
+  }, [])
 
   const submit = (e: any) => {
     e.preventDefault()
-    signIn(login, sublogin, password)
+    signIn(login, sublogin, password).then((res: any) => {
+      if (!res.isError) {
+        navigate('/console')
+      }
+    })
   }
-  useEffect(() => {
-    if (authResult.res.session) navigate('/console')
-  }, [authResult])
 
   return (
     <LoginPage submit={submit} authResult={authResult} isLoading={isLoading} />
@@ -61,5 +63,5 @@ export default connect(
       authResult,
     }
   },
-  { signIn }
+  { signIn, setAuthResult: createSetAuthResultAction }
 )(LoginPageContainer)

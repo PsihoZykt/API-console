@@ -6,17 +6,16 @@ import {
   getCurrentRequest,
   getRequestHistory,
 } from '../../store/selectors/consolePage/selector'
+import { Request, RequestStatus } from '../../store/reducers/consoleReducer'
+import { authWithSession, logout, makeRequest } from '../../api/sendsay'
+import { getAuthResult } from '../../store/selectors/loginPage/selector'
+import { useNavigate } from 'react-router-dom'
+import { createSetAuthResultAction } from '../../store/actionCreators/login'
 import {
-  createChangeCurrentRequest,
+  createChangeCurrentRequestAction,
   createChangeRequestBodyAction,
   createSubmitRequestAction,
-  Request,
-  RequestStatus,
-} from '../../store/reducers/consoleReducer'
-import { authWithSession, makeRequest } from '../../api/sendsay'
-import { getAuthResult } from '../../store/selectors/loginPage/selector'
-import { setAuthResult } from '../../store/reducers/loginReducer'
-import { useNavigate } from 'react-router-dom'
+} from '../../store/actionCreators/console'
 
 interface IProps {
   currentRequest: Request;
@@ -46,9 +45,11 @@ const ConsolePageContainer = ({
     }
   }, [])
 
-  const logout = () => {
+  const onLogout = () => {
     localStorage.removeItem('sendsay_session')
-    navigate('/')
+    logout().then((res) => {
+      navigate('/')
+    })
   }
 
   const onSubmitRequest = (body: string) => {
@@ -68,7 +69,7 @@ const ConsolePageContainer = ({
         const isSuccessful = !!(res._ehid ?? false)
         const status = isSuccessful
           ? RequestStatus.Successful
-          : RequestStatus.Unseccussful
+          : RequestStatus.Unsuccessful
 
         const id = res['_ehid']
         const requestText = body
@@ -88,7 +89,7 @@ const ConsolePageContainer = ({
       isRequestError={isRequestError}
       isResponseError={isResponseError}
       auth={auth}
-      logout={logout}
+      onLogout={onLogout}
     />
   )
 }
@@ -104,7 +105,7 @@ export default connect(
   {
     changeRequestBody: createChangeRequestBodyAction,
     submitRequest: createSubmitRequestAction,
-    changeCurrentRequest: createChangeCurrentRequest,
-    setAuthResult: setAuthResult,
+    changeCurrentRequest: createChangeCurrentRequestAction,
+    setAuthResult: createSetAuthResultAction,
   }
 )(ConsolePageContainer)

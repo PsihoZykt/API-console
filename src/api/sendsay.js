@@ -36,13 +36,24 @@ const makeRequest = async (body) => {
       ...request,
       session: localStorage.getItem('sendsay_session'),
     })
+    console.log(res)
     return res
   } catch (e) {
     console.log(e)
     return e
   }
 }
-
+const logout = async () => {
+  const sendsay = new Sendsay()
+  try {
+    const res = await sendsay.request({
+      action: 'logout',
+    })
+    return { isError: false, res }
+  } catch (e) {
+    return { isError: true, res: e }
+  }
+}
 const test = async () => {
   const sendsay2 = new Sendsay()
 
@@ -53,4 +64,4 @@ const test = async () => {
 
   console.log(res)
 }
-export { auth, test, makeRequest, authWithSession }
+export { auth, test, makeRequest, authWithSession, logout }

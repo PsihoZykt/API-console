@@ -16,7 +16,6 @@ const RenderField = ({
   meta: { touched, error },
   optional,
 }: IProps) => {
-  console.log(input)
   const errorClass =
     touched && error
       ? 'login-form_input login-form_input_error'
