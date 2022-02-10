@@ -22,7 +22,7 @@ const ConsolePage = ({
   isRequestError,
   isResponseError,
   auth,
-  logout,
+  onLogout,
 }: any) => {
   const onCurrentRequestTextChange = (e: any) => {
     changeRequestBody(e.target.value)
@@ -38,7 +38,7 @@ const ConsolePage = ({
         </div>
         <div className="header__right">
           <div className="header__login">{auth.res.account}</div>
-          <div onClick={logout} className="header__exit">
+          <div onClick={onLogout} className="header__exit">
             <div>Выйти</div>
             <img src={exit} alt="exit symbol" />
           </div>
@@ -91,7 +91,7 @@ const RequestHistoryItem = ({ status, requestText, id }: any) => {
     <div className="history__item">
       <div className={statusClass} />
       <div>{JSON.parse(requestText).action}</div>
-      <DragElement />
+      <DragElement className="history__item_expand" />
     </div>
   )
 }
@@ -111,14 +111,14 @@ const Footer = ({ onSubmitRequest, currentRequest }: any) => {
     <div className="footer">
       <button
         onClick={() => onSubmitRequest(currentRequest.requestText)}
-        className="footer_submit"
+        className="footer__submit"
       >
         Отправить
       </button>
       <GithubLink />
       <div className="footer_format">
         <img src={format} alt="some rectangles with different width" />
-        Форматировать
+        <div> Форматировать </div>
       </div>
     </div>
   )
