@@ -1,5 +1,5 @@
-import { Action } from '../../helpers/helper'
-import { AuthResult } from '../../reducers/loginReducer'
+import { Action } from 'store/helpers/helper'
+import { AuthResult } from 'store/reducers/loginReducer'
 
 export const SET_AUTH_RESULT = 'SET_AUTH_RESULT'
 export const SET_IS_LOADING = 'SET_IS_LOADING'

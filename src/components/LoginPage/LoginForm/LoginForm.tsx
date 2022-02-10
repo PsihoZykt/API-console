@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form'
 import FormError from 'components/LoginPage/LoginForm/FormError/FormError'
 import './LoginForm.css'
 import Loader from 'common/Loader/Loader'
-import validate from '../../../validators/loginPage/validate'
+import validate from 'validators/loginPage/validate'
 import renderField from './RenderField/RenderField'
 
 const LoginForm = ({

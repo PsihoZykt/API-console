@@ -1,5 +1,5 @@
-import { Action } from '../../helpers/helper'
-import { Request } from '../../reducers/consoleReducer'
+import { Action } from 'store/helpers/helper'
+import { Request } from 'store/reducers/consoleReducer'
 
 export const CHANGE_REQUEST_BODY = 'CHANGE_REQUEST_BODY'
 export const GET_REQUEST_HISTORY = 'GET_REQUEST_HISTORY'

@@ -7,7 +7,7 @@ import {
   DeleteRequestAction,
   SUBMIT_REQUEST,
   SubmitRequestAction,
-} from '../actions/console'
+} from 'store/actions/console'
 
 export enum RequestStatus {
   Successful,

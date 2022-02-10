@@ -1,5 +1,5 @@
-import { createAction } from '../../helpers/helper'
-import { Request } from '../../reducers/consoleReducer'
+import { createAction } from 'store/helpers/helper'
+import { Request } from 'store/reducers/consoleReducer'
 import {
   CHANGE_CURRENT_REQUEST,
   CHANGE_REQUEST_BODY,

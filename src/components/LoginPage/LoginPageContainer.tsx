@@ -4,13 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { formValueSelector } from 'redux-form'
 import LoginPage from './LoginPage'
-import { signIn } from '../../store/thunks/login'
-import {
-  getAuthResult,
-  getIsLoading,
-} from '../../store/selectors/loginPage/selector'
-import { authWithSession } from '../../api/sendsay'
-import { createSetAuthResultAction } from '../../store/actionCreators/login'
+import { signIn } from 'store/thunks/login'
+import { getAuthResult, getIsLoading } from 'store/selectors/loginPage/selector'
+import { authWithSession } from 'api/sendsay'
+import { createSetAuthResultAction } from 'store/actionCreators/login'
 
 const LoginPageContainer = ({
   login,

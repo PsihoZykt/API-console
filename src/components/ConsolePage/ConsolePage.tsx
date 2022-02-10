@@ -1,13 +1,13 @@
 import React from 'react'
-import { Request, RequestStatus } from '../../store/reducers/consoleReducer'
+import { Request, RequestStatus } from 'store/reducers/consoleReducer'
 import './ConsolePage.css'
-import exit from '../../assets/img/consolePage/log-out.svg'
-import maximize from '../../assets/img/consolePage/maximize.svg'
-import GithubLink from '../../common/GithubLink/GithubLink'
-import Logo from '../../common/Logo/Logo'
-import format from '../../assets/img/consolePage/format.svg'
-import Textarea from './Textarea/Textarea'
-import DragElement from '../../common/DragElement/DragElement'
+import exit from 'assets/img/consolePage/log-out.svg'
+import maximize from 'assets/img/consolePage/maximize.svg'
+import GithubLink from 'common/GithubLink/GithubLink'
+import Logo from 'common/Logo/Logo'
+import format from 'assets/img/consolePage/format.svg'
+import Textarea from 'components/ConsolePage/Textarea/Textarea'
+import DragElement from 'common/DragElement/DragElement'
 
 interface IProps {
   currentRequest: Request;

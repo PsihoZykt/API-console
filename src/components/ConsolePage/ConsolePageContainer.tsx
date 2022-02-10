@@ -5,17 +5,17 @@ import ConsolePage from './ConsolePage'
 import {
   getCurrentRequest,
   getRequestHistory,
-} from '../../store/selectors/consolePage/selector'
-import { Request, RequestStatus } from '../../store/reducers/consoleReducer'
-import { authWithSession, logout, makeRequest } from '../../api/sendsay'
-import { getAuthResult } from '../../store/selectors/loginPage/selector'
+} from 'store/selectors/consolePage/selector'
+import { Request, RequestStatus } from 'store/reducers/consoleReducer'
+import { authWithSession, logout, makeRequest } from 'api/sendsay'
 import { useNavigate } from 'react-router-dom'
-import { createSetAuthResultAction } from '../../store/actionCreators/login'
 import {
   createChangeCurrentRequestAction,
   createChangeRequestBodyAction,
   createSubmitRequestAction,
-} from '../../store/actionCreators/console'
+} from 'store/actionCreators/console'
+import { createSetAuthResultAction } from 'store/actionCreators/login'
+import { getAuthResult } from 'store/selectors/loginPage/selector'
 
 interface IProps {
   currentRequest: Request;

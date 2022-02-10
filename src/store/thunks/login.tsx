@@ -1,9 +1,9 @@
-import { auth } from '../../api/sendsay'
+import { auth } from 'api/sendsay'
 import { Dispatch } from 'redux'
 import {
   createSetAuthResultAction,
   createSetIsLoadingAction,
-} from '../actionCreators/login'
+} from 'store/actionCreators/login'
 
 export const signIn =
   (login: string, sublogin: string, password: string) =>

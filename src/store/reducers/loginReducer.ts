@@ -3,7 +3,7 @@ import {
   SET_IS_LOADING,
   SetAuthResultAction,
   SetIsLoadingAction,
-} from '../actions/login'
+} from 'store/actions/login'
 
 export interface AuthResult {
   isError: boolean;
