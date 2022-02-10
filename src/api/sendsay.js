@@ -15,6 +15,33 @@ const auth = async (login, sublogin, password) => {
     return { isError: true, res: e }
   }
 }
+const authWithSession = async () => {
+  const sendsay = new Sendsay()
+
+  try {
+    const res = await sendsay.request({
+      action: 'pong',
+      session: localStorage.getItem('sendsay_session'),
+    })
+    return { isError: false, res }
+  } catch (e) {
+    return { isError: true, res: e }
+  }
+}
+const makeRequest = async (body) => {
+  let request = JSON.parse(body)
+  const sendsay = new Sendsay()
+  try {
+    const res = await sendsay.request({
+      ...request,
+      session: localStorage.getItem('sendsay_session'),
+    })
+    return res
+  } catch (e) {
+    console.log(e)
+    return e
+  }
+}
 
 const test = async () => {
   const sendsay2 = new Sendsay()
@@ -26,4 +53,4 @@ const test = async () => {
 
   console.log(res)
 }
-export { auth, test }
+export { auth, test, makeRequest, authWithSession }
