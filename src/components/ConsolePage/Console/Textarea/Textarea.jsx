@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import './Textarea.css'
-import DragElement from '../../../common/DragElement/DragElement'
+import DragElement from '../../../../common/DragElement/DragElement'
 
 const Textarea = ({ onCurrentRequestTextChange, currentRequest }) => {
   const resizeDrag = useRef(null)

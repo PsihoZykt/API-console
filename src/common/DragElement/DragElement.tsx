@@ -1,7 +1,7 @@
 import React from 'react'
 import './DragElement.css'
 type PropsType = {
-  className: string,
+  className?: string,
 }
 const DragElement: (classname: PropsType) => JSX.Element = ({
   className,
