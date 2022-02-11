@@ -1,6 +1,6 @@
 import React, {ChangeEvent, MutableRefObject, useRef, useState} from 'react'
 import './Textarea.css'
-import DragElement from 'common/DragElement/DragElement'
+import {DragElement} from 'common/DragElement/DragElement'
 import {Request} from "store/reducers/consoleReducer";
 
 type PropTypes = {
