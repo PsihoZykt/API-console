@@ -3,7 +3,7 @@ import Logo from "common/Logo/Logo";
 import exit from "assets/img/consolePage/log-out.svg";
 import maximize from "assets/img/consolePage/maximize.svg";
 import {AuthResult} from "store/reducers/loginReducer";
-
+import './Header.css'
 type PropTypes = {
     auth: AuthResult
     onLogout: () => void

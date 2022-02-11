@@ -1,7 +1,7 @@
 import { RequestStatus } from 'store/reducers/consoleReducer'
 import DragElement from 'common/DragElement/DragElement'
 import React from 'react'
-
+import './RequestHistoryItem.css'
 type PropTypes = {
   status: RequestStatus,
   requestText: string,

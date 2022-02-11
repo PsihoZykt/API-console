@@ -2,7 +2,7 @@ import GithubLink from "common/GithubLink/GithubLink";
 import format from "assets/img/consolePage/format.svg";
 import React from "react";
 import {Request} from "store/reducers/consoleReducer";
-
+import './Footer.css'
 type PropsType = {
     onSubmitRequest: (requestText: string) => void
     currentRequest: Request

@@ -65,6 +65,7 @@ const ConsolePageContainer = ({
   }
 
   const onSubmitRequest = (body: string) => {
+    console.log(body)
     let request
     try {
       request = JSON.parse(body)

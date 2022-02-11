@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react'
 import Textarea from 'components/ConsolePage/Console/Textarea/Textarea'
 import {Request} from "store/reducers/consoleReducer";
-
+import './Console.css'
 type PropTypes = {
   isRequestError: boolean,
   isResponseError: boolean,
