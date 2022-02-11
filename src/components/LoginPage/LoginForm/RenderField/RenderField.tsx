@@ -9,7 +9,7 @@ type PropsType = {
   optional: boolean,
 }
 
-const RenderField = ({
+const RenderField: React.FC<PropsType> = ({
   input,
   label,
   type,

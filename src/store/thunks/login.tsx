@@ -1,17 +1,23 @@
 import { auth } from 'api/sendsay'
-import { Dispatch } from 'redux'
+import { ThunkAction } from 'redux-thunk'
+import { RootState } from 'store/store'
+import { AuthResult } from 'store/reducers/loginReducer'
 import {
-  createSetAuthResultAction,
-  createSetIsLoadingAction,
-} from 'store/actionCreators/login'
+  loginActions,
+  LoginActionsType,
+} from 'store/actions/login/loginActions'
 
 export const signIn =
-  (login: string, sublogin: string, password: string) =>
-  async (dispatch: Dispatch) => {
+  (
+    login: string,
+    sublogin: string,
+    password: string
+  ): ThunkAction<Promise<AuthResult>, RootState, unknown, LoginActionsType> =>
+  async (dispatch) => {
     console.log('SignIn')
-    dispatch(createSetIsLoadingAction(true))
+    dispatch(loginActions.setIsLoadingAction(true))
     const response = await auth(login, sublogin, password)
-    dispatch(createSetAuthResultAction(response))
-    dispatch(createSetIsLoadingAction(false))
+    dispatch(loginActions.setAuthResultAction(response))
+    dispatch(loginActions.setIsLoadingAction(false))
     return response
   }

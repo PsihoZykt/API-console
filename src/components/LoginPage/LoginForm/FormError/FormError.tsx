@@ -9,7 +9,9 @@ type PropsType = {
   },
 }
 
-const FormError = ({ error: { id, explain } }: PropsType) => (
+const FormError: React.FC<PropsType> = ({
+  error: { id, explain },
+}: PropsType) => (
   <div className="form-error">
     <img className="form-error__img" src={formErrorImg} alt="meh face" />
     <div>

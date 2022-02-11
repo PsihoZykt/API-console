@@ -1,13 +1,10 @@
 import {
-  CHANGE_CURRENT_REQUEST,
-  CHANGE_REQUEST_BODY,
-  ChangeCurrentRequestAction,
-  ChangeRequestBodyAction,
-  DELETE_REQUEST,
-  DeleteRequestAction,
-  SUBMIT_REQUEST,
-  SubmitRequestAction,
-} from 'store/actions/console'
+  ChangeCurrentRequestActionType,
+  ChangeRequestBodyActionType,
+  ConsoleActionsType,
+  DeleteRequestActionType,
+  SubmitRequestActionType,
+} from 'store/actions/console/consoleActions'
 
 export enum RequestStatus {
   Successful,
@@ -16,7 +13,7 @@ export enum RequestStatus {
 }
 
 export interface Request {
-  id: number;
+  id: string;
   status: RequestStatus;
   requestText: string;
   requestResponse: string;
@@ -29,68 +26,65 @@ export interface ConsoleState {
   currentRequest: Request;
 }
 
-function changeRequestBody(
-  state: ConsoleState,
-  action: ChangeRequestBodyAction
-): ConsoleState {
-  return {
-    ...state,
-    currentRequest: { ...state.currentRequest, requestText: action.payload },
-  }
-}
-
-function deleteRequest(
-  state: ConsoleState,
-  action: DeleteRequestAction
-): ConsoleState {
-  return {
-    ...state,
-    requestHistory: state.requestHistory.filter((request) => {
-      return request.id !== action.payload.id
-    }),
-  }
-}
-
-function changeCurrentRequest(
-  state: ConsoleState,
-  action: ChangeCurrentRequestAction
-): ConsoleState {
-  return { ...state, currentRequest: action.payload }
-}
-
-function submitRequest(
-  state: ConsoleState,
-  action: SubmitRequestAction
-): ConsoleState {
-  return { ...state, requestHistory: [...state.requestHistory, action.payload] }
-}
-
-type Actions =
-  | SubmitRequestAction
-  | ChangeCurrentRequestAction
-  | DeleteRequestAction
-  | ChangeRequestBodyAction
-
 const initialState: ConsoleState = {
   login: '',
   sublogin: '',
   requestHistory: [],
   currentRequest: {
-    id: 1,
+    id: '1',
     status: RequestStatus.NotSubmitted,
     requestText: '{"action": "pong"}',
     requestResponse: '{}',
   },
 }
-export default function consoleReducer(state = initialState, action: Actions) {
+const changeRequestBody = (
+  state: ConsoleState,
+  action: ChangeRequestBodyActionType
+): ConsoleState => ({
+  ...state,
+  currentRequest: {
+    ...state.currentRequest,
+    requestText: action.payload,
+  },
+})
+
+const changeCurrentRequest = (
+  state: ConsoleState,
+  action: ChangeCurrentRequestActionType
+): ConsoleState => ({
+  ...state,
+  currentRequest: action.payload,
+})
+
+const submitRequest = (
+  state: ConsoleState,
+  action: SubmitRequestActionType
+): ConsoleState => ({
+  ...state,
+  requestHistory: [...state.requestHistory, action.payload],
+})
+const deleteRequest = (
+  state: ConsoleState,
+  action: DeleteRequestActionType
+): ConsoleState => ({
+  ...state,
+  requestHistory: state.requestHistory.filter((request) => {
+    return request.id !== action.payload.id
+  }),
+})
+
+export default function consoleReducer(
+  state = initialState,
+  action: ConsoleActionsType
+) {
   switch (action.type) {
-    case CHANGE_REQUEST_BODY:
+    case 'CHANGE_REQUEST_BODY':
       return changeRequestBody(state, action)
-    case CHANGE_CURRENT_REQUEST:
+    case 'CHANGE_CURRENT_REQUEST':
       return changeCurrentRequest(state, action)
-    case SUBMIT_REQUEST:
+    case 'SUBMIT_REQUEST':
       return submitRequest(state, action)
-    case DELETE_REQUEST:
+    case 'DELETE_REQUEST':
       return deleteRequest(state, action)
     default:
       return state

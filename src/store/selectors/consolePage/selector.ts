@@ -1,5 +1,5 @@
-import { RootState } from 'store/store'
 import { Request } from 'store/reducers/consoleReducer'
+import { RootState } from 'store/store'
 
 export const getCurrentRequest = (state: RootState): Request => {
   return state.consolePage.currentRequest

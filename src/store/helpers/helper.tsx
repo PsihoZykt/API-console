@@ -4,5 +4,5 @@ export interface Action<T extends string, P> {
 }
 
 export function createAction<T extends string, P>(type: T, payload: P): Action<T, P> {
-    return {type, payload};
+    return {type, payload} as const;
 }

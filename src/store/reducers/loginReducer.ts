@@ -1,9 +1,4 @@
-import {
-  SET_AUTH_RESULT,
-  SET_IS_LOADING,
-  SetAuthResultAction,
-  SetIsLoadingAction,
-} from 'store/actions/login'
+import { LoginActionsType } from 'store/actions/login/loginActions'
 
 export type AuthResult = {
   isError: boolean,
@@ -22,36 +17,21 @@ const initialState = {
   isLoading: false,
 }
 
-export function setAuthResult(
-  state: LoginState,
-  action: SetAuthResultAction
-): LoginState {
-  return {
-    ...state,
-    authResult: action.payload,
-  }
-}
-
-export function setIsLoading(
-  state: LoginState,
-  action: SetIsLoadingAction
-): LoginState {
-  return {
-    ...state,
-    isLoading: action.payload,
-  }
-}
-
-type Actions = SetIsLoadingAction | SetAuthResultAction
 export default function loginReducer(
   state: LoginState = initialState,
-  action: Actions
+  action: LoginActionsType
 ) {
   switch (action.type) {
-    case SET_AUTH_RESULT:
-      return setAuthResult(state, action)
-    case SET_IS_LOADING:
-      return setIsLoading(state, action)
+    case 'SET_AUTH_RESULT':
+      return {
+        ...state,
+        authResult: action.payload,
+      }
+    case 'SET_IS_LOADING':
+      return {
+        ...state,
+        isLoading: action.payload,
+      }
     default:
       return state
   }

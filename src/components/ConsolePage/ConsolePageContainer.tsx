@@ -1,22 +1,22 @@
 import React, {useEffect, useState} from 'react'
-import {connect, ConnectedProps} from 'react-redux'
+import {connect} from 'react-redux'
 import ConsolePage from './ConsolePage'
 
 import {getCurrentRequest, getRequestHistory,} from 'store/selectors/consolePage/selector'
 import {Request, RequestStatus} from 'store/reducers/consoleReducer'
 import {authWithSession, logout, makeRequest} from 'api/sendsay'
 import {useNavigate} from 'react-router-dom'
-import {
-  createChangeCurrentRequestAction,
-  createChangeRequestBodyAction,
-  createSubmitRequestAction,
-} from 'store/actionCreators/console'
-import {createSetAuthResultAction} from 'store/actionCreators/login'
+
 import {getAuthResult} from 'store/selectors/loginPage/selector'
 import {AuthResult} from 'store/reducers/loginReducer'
 import {RootState} from 'store/store'
-import {ChangeCurrentRequestAction, ChangeRequestBodyAction, SubmitRequestAction} from "store/actions/console";
-import {SetAuthResultAction} from "store/actions/login";
+import {loginActions, SetAuthResultActionType} from "store/actions/login/loginActions";
+import {
+  ChangeCurrentRequestActionType,
+  ChangeRequestBodyActionType,
+  consoleActions,
+  SubmitRequestActionType
+} from "store/actions/console/consoleActions";
 
 type MapState = {
   currentRequest: Request,
@@ -24,12 +24,12 @@ type MapState = {
   auth: AuthResult,
 }
 type DispatchState = {
-  changeRequestBody: (body: string) => ChangeRequestBodyAction
-  submitRequest: (request: Request) => SubmitRequestAction
+  changeRequestBody: (body: string) => ChangeRequestBodyActionType
+  submitRequest: (request: Request) => SubmitRequestActionType
   changeCurrentRequest: (request: Request) =>
-      ChangeCurrentRequestAction
+      ChangeCurrentRequestActionType
   setAuthResult: (authResult: AuthResult) =>
-      SetAuthResultAction
+      SetAuthResultActionType
 }
 type Props = MapState & DispatchState
 
@@ -115,12 +115,13 @@ const connector = connect<MapState, DispatchState, Record<string, never>, RootSt
       }
     },
     {
-      changeRequestBody: (body: string) => createChangeRequestBodyAction(body),
-      submitRequest: (request: Request) => createSubmitRequestAction(request),
+      changeRequestBody: (body: string) => consoleActions.createChangeRequestBodyAction(body),
+      submitRequest: (request: Request) => consoleActions.createSubmitRequestAction(request),
       changeCurrentRequest: (request: Request) =>
-          createChangeCurrentRequestAction(request),
+          consoleActions.createChangeCurrentRequestAction(request),
       setAuthResult: (authResult: AuthResult) =>
-          createSetAuthResultAction(authResult),
+          loginActions.setAuthResultAction(authResult),
+
     }
 )
 export default connector(ConsolePageContainer)

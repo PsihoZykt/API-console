@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FormEvent} from 'react'
 import './LoginPage.css'
 import LoginForm from 'components/LoginPage/LoginForm/LoginForm'
 import GithubLink from 'common/GithubLink/GithubLink'
@@ -7,10 +7,10 @@ import {AuthResult} from "store/reducers/loginReducer";
 
 type PropsType = {
     authResult: AuthResult
-    submit: (form: HTMLFormElement) => void
+    submit: (form: FormEvent<HTMLFormElement>) => void
     isLoading: boolean
 }
-const LoginPage = ({authResult, submit, isLoading}: PropsType) => (
+const LoginPage: React.FC<PropsType> = ({authResult, submit, isLoading}: PropsType) => (
     <div className="login-page">
         <Logo/>
         <LoginForm

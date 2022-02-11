@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { FormEvent, useEffect } from 'react'
 import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
 import { connect, ConnectedProps } from 'react-redux'
@@ -7,8 +7,8 @@ import LoginPage from './LoginPage'
 import { signIn } from 'store/thunks/login'
 import { getAuthResult, getIsLoading } from 'store/selectors/loginPage/selector'
 import { authWithSession } from 'api/sendsay'
-import { createSetAuthResultAction } from 'store/actionCreators/login'
 import { RootState } from 'store/store'
+import { loginActions } from 'store/actions/login/loginActions'
 
 const LoginPageContainer = ({
   login,
@@ -30,8 +30,8 @@ const LoginPageContainer = ({
     }
   }, [])
 
-  const submit = (e: HTMLFormElement) => {
-    e.preventDefault()
+  const submit = (form: FormEvent<HTMLFormElement>) => {
+    form.preventDefault()
     signIn(login, sublogin, password).then((res: any) => {
       if (!res.isError) {
         navigate('/console')
@@ -62,7 +62,7 @@ const connector = connect(
       authResult,
     }
   },
-  { signIn, setAuthResult: createSetAuthResultAction }
+  { signIn, setAuthResult: loginActions.setAuthResultAction }
 )
 type PropsFromRedux = ConnectedProps<typeof connector>
 export default connector(LoginPageContainer)
