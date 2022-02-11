@@ -1,13 +1,21 @@
 import React from 'react'
 import './RenderField.css'
-/* eslint react/prop-types: 0 */
-const RenderField = ({
+
+type PropsType = {
+  input: Array<HTMLInputElement>,
+  label: string,
+  type: string,
+  meta: { touched: string, error: string },
+  optional: boolean,
+}
+
+const RenderField: React.FC<PropsType> = ({
   input,
   label,
   type,
   meta: { touched, error },
   optional,
-}) => {
+}: PropsType) => {
   const errorClass =
     touched && error
       ? 'login-form_input login-form_input_error'
@@ -22,7 +30,7 @@ const RenderField = ({
         )}
       </label>
       <div>
-        <input className={errorClass} {...input} type={type} />
+        <input {...input} className={errorClass} type={type} />
       </div>
     </div>
   )

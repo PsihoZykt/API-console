@@ -31,6 +31,9 @@
     ],
     "import/no-mutable-exports": [
       0
+    ],
+    "import/no-unresolved": [
+      0
     ]
   },
   "plugins": [

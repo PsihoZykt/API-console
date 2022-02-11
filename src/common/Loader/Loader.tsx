@@ -1,7 +1,7 @@
 import React from 'react'
 import './Loader.css'
 
-const Loader = () => (
+const Loader: React.FC = () => (
   <div className="lds-spinner">
     <div />
     <div />

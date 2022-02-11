@@ -1,0 +1,41 @@
+.header {
+    display: grid;
+    grid-template-columns: 7fr 1fr;
+    background: #F6F6F6;
+    padding: 10px 15px;
+
+}
+
+.header__left {
+    display: flex;
+    gap: 20px;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.header__right {
+    display: flex;
+    gap: 20px;
+    font-size: 16px;
+    line-height: 20px;
+    align-items: center;
+}
+
+.header__login {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 5px 15px;
+
+
+}
+
+.header__exit {
+    display: flex;
+    gap: 8px;
+}
+
+.header__exit_maximize {
+    margin-left: 10px;
+}
+
