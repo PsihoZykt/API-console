@@ -1,4 +1,5 @@
 .history__item {
+    position: relative;
     display: flex;
     gap: 5px;
     align-items: center;

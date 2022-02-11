@@ -1,22 +1,41 @@
-import { RequestStatus } from 'store/reducers/consoleReducer'
-import DragElement from 'common/DragElement/DragElement'
+import { Request, RequestStatus } from 'store/reducers/consoleReducer'
+import { ExpandElement } from 'common/DragElement/DragElement'
 import React from 'react'
 import './RequestHistoryItem.css'
+
 type PropTypes = {
-  status: RequestStatus,
-  requestText: string,
-  id: string,
+  onChangeCurrentRequestText: (body: string) => void,
+  onDeleteRequest: (request: Request) => void,
+  onCopyRequest: (request: Request) => void,
+  onRunRequest: (request: Request) => void,
+  request: Request,
 }
-const RequestHistoryItem = ({ status, requestText, id }: PropTypes) => {
+const RequestHistoryItem = ({
+  request,
+  onChangeCurrentRequestText,
+  onRunRequest,
+  onDeleteRequest,
+  onCopyRequest,
+}: PropTypes) => {
   const statusClass =
-    status === RequestStatus.Successful
+    request.status === RequestStatus.Successful
       ? 'status_successful'
       : 'status_unsuccessful'
   return (
-    <div className="history__item">
+    <div
+      onClick={() => onChangeCurrentRequestText(request.requestText)}
+      // onClick={() => onDeleteRequest(request)}
+      className="history__item"
+    >
       <div className={statusClass} />
-      <div>{JSON.parse(requestText).action}</div>
-      <DragElement className="history__item_expand" />
+      <div>{JSON.parse(request.requestText).action}</div>
+      <ExpandElement
+        className="history__item_expand"
+        onCopyRequest={onCopyRequest}
+        onRunRequest={onRunRequest}
+        request={request}
+        onDeleteRequest={onDeleteRequest}
+      />
     </div>
   )
 }
