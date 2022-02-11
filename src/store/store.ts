@@ -10,8 +10,9 @@ const rootReducer = combineReducers({
   consolePage: consoleReducer,
   form: formReducer,
 })
-type RootReducerType = typeof rootReducer
-export type AppStateType = ReturnType<RootReducerType>
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
 const store = createStore(
   rootReducer,

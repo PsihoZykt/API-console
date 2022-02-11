@@ -53,7 +53,7 @@ const Textarea = ({ onCurrentRequestTextChange, currentRequest }) => {
         <div id="resizable">
           <textarea
             className="console__request_input"
-            onChange={onCurrentRequestTextChange}
+            onChange={(e) => onCurrentRequestTextChange(e)}
             value={currentRequest.requestText}
           />
         </div>

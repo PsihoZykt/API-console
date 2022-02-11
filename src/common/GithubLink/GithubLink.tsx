@@ -1,6 +1,6 @@
 import React from 'react'
 import './GithubLink.css'
-const GithubLink = (): any => {
+const GithubLink: React.FC = () => {
   return (
     <div>
       <div className="github-link">

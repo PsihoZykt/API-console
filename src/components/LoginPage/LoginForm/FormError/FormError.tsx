@@ -2,14 +2,14 @@ import React from 'react'
 import './FormError.css'
 import formErrorImg from 'assets/img/loginPage/meh.svg'
 
-interface IProps {
+type PropsType = {
   error: {
     id: string,
     explain: object,
-  };
+  },
 }
 
-const FormError = ({ error: { id, explain } }: IProps) => (
+const FormError = ({ error: { id, explain } }: PropsType) => (
   <div className="form-error">
     <img className="form-error__img" src={formErrorImg} alt="meh face" />
     <div>

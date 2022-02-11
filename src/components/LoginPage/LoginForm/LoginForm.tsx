@@ -5,13 +5,20 @@ import './LoginForm.css'
 import Loader from 'common/Loader/Loader'
 import validate from 'validators/loginPage/validate'
 import renderField from './RenderField/RenderField'
+import {AuthResult} from "store/reducers/loginReducer";
 
+type PropsType = {
+    handleSubmit: () => void
+    submitting: boolean,
+    authResult: AuthResult,
+    isLoading: boolean
+}
 const LoginForm = ({
   handleSubmit,
   submitting,
   authResult,
   isLoading,
-}: any) => (
+}: PropsType) => (
   <form onSubmit={handleSubmit} className="login-form">
     <div className="login-form__header">API-консолька</div>
     {authResult.isError && <FormError error={authResult.res} />}

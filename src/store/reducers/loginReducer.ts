@@ -5,13 +5,13 @@ import {
   SetIsLoadingAction,
 } from 'store/actions/login'
 
-export interface AuthResult {
-  isError: boolean;
-  res: any;
+export type AuthResult = {
+  isError: boolean,
+  res: any,
 }
-export interface LoginState {
-  authResult: AuthResult;
-  isLoading: boolean;
+export type LoginState = {
+  authResult: AuthResult,
+  isLoading: boolean,
 }
 
 const initialState = {

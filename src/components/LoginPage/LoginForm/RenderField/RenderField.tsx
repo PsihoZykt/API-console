@@ -1,12 +1,12 @@
 import React from 'react'
 import './RenderField.css'
 
-interface IProps {
-  input: any;
-  label: string;
-  type: string;
-  meta: { touched: string, error: string };
-  optional: boolean;
+type PropsType = {
+  input: Array<HTMLInputElement>,
+  label: string,
+  type: string,
+  meta: { touched: string, error: string },
+  optional: boolean,
 }
 
 const RenderField = ({
@@ -15,7 +15,7 @@ const RenderField = ({
   type,
   meta: { touched, error },
   optional,
-}: IProps) => {
+}: PropsType) => {
   const errorClass =
     touched && error
       ? 'login-form_input login-form_input_error'

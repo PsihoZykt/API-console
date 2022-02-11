@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { Request, RequestStatus } from 'store/reducers/consoleReducer'
 import './ConsolePage.css'
 import exit from 'assets/img/consolePage/log-out.svg'
@@ -8,12 +8,18 @@ import Logo from 'common/Logo/Logo'
 import format from 'assets/img/consolePage/format.svg'
 import Textarea from 'components/ConsolePage/Textarea/Textarea'
 import DragElement from 'common/DragElement/DragElement'
+import { AuthResult } from 'store/reducers/loginReducer'
 
-interface IProps {
-  currentRequest: Request;
-  submitRequest: (body: string) => any;
+type PropsType = {
+  currentRequest: Request,
+  onSubmitRequest: (requestText: string) => void,
+  changeRequestBody: (requestText: string) => void,
+  requestHistory: Array<Request>,
+  isRequestError: boolean,
+  isResponseError: boolean,
+  auth: AuthResult,
+  onLogout: () => void,
 }
-
 const ConsolePage = ({
   currentRequest,
   onSubmitRequest,
@@ -23,12 +29,12 @@ const ConsolePage = ({
   isResponseError,
   auth,
   onLogout,
-}: any) => {
-  const onCurrentRequestTextChange = (e: any) => {
+}: PropsType) => {
+  const onCurrentRequestTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     changeRequestBody(e.target.value)
   }
 
-  const getErrorClass = (isError: any) => (isError ? 'error' : '')
+  const getErrorClass = (isError: boolean) => (isError ? 'error' : '')
   return (
     <div>
       <div className="header">
@@ -97,7 +103,7 @@ const RequestHistoryItem = ({ status, requestText, id }: any) => {
 }
 
 const RequestHistory = ({ requestHistory }: any) => {
-  const historyElement = requestHistory.map((request: any) => (
+  const historyElement = requestHistory.map((request: Request) => (
     <RequestHistoryItem
       id={request.id}
       status={request.status}

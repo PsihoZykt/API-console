@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
 import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { connect, ConnectedProps } from 'react-redux'
 import { formValueSelector } from 'redux-form'
 import LoginPage from './LoginPage'
 import { signIn } from 'store/thunks/login'
 import { getAuthResult, getIsLoading } from 'store/selectors/loginPage/selector'
 import { authWithSession } from 'api/sendsay'
 import { createSetAuthResultAction } from 'store/actionCreators/login'
+import { RootState } from 'store/store'
 
 const LoginPageContainer = ({
   login,
@@ -17,7 +18,7 @@ const LoginPageContainer = ({
   authResult,
   signIn,
   setAuthResult,
-}: any) => {
+}: PropsFromRedux) => {
   const navigate = useNavigate()
   console.log(authResult)
   useEffect(() => {
@@ -29,7 +30,7 @@ const LoginPageContainer = ({
     }
   }, [])
 
-  const submit = (e: any) => {
+  const submit = (e: HTMLFormElement) => {
     e.preventDefault()
     signIn(login, sublogin, password).then((res: any) => {
       if (!res.isError) {
@@ -44,8 +45,9 @@ const LoginPageContainer = ({
 }
 
 const selector = formValueSelector('login')
-export default connect(
-  (state: any) => {
+// Record<string, never> means "empty" object. LoginPageContainer doesn't have own props (passed form App), so we need mock object for connect
+const connector = connect(
+  (state: RootState) => {
     const login = selector(state, 'login')
     const sublogin = selector(state, 'sublogin')
     const password = selector(state, 'password')
@@ -61,4 +63,6 @@ export default connect(
     }
   },
   { signIn, setAuthResult: createSetAuthResultAction }
-)(LoginPageContainer)
+)
+type PropsFromRedux = ConnectedProps<typeof connector>
+export default connector(LoginPageContainer)
