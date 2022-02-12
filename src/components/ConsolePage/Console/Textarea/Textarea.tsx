@@ -6,11 +6,13 @@ import {Request} from "store/reducers/consoleReducer";
 type PropTypes = {
   onCurrentRequestTextChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
   currentRequest: Request
+  isRequestError: boolean
 }
-const Textarea = ({onCurrentRequestTextChange, currentRequest}: PropTypes) => {
+const Textarea = ({onCurrentRequestTextChange, currentRequest, isRequestError}: PropTypes) => {
   const resizeDrag = useRef<HTMLDivElement>(null) as MutableRefObject<HTMLDivElement>;
   const wrapperRef = useRef<HTMLDivElement>(null) as MutableRefObject<HTMLDivElement>;
   const [width, setWidth] = useState(200)
+  const getErrorClass = (isError: boolean) => (isError ? 'error' : '')
 
 
   let x: number
@@ -45,9 +47,9 @@ const Textarea = ({onCurrentRequestTextChange, currentRequest}: PropTypes) => {
   return (
       <div className="cTargetContener" id="idTargetContener">
         <div ref={wrapperRef} id="container">
-          <div style={{width: width + 'px'}} id="resizable">
+          <div className={"console__request_input " + getErrorClass(isRequestError)} style={{width: width + 'px'}} id="resizable">
           <textarea
-              className="console__request_input"
+              className={`console__request_textarea`}
               onChange={(e) => onCurrentRequestTextChange(e)}
               value={currentRequest.requestText}
           />
