@@ -6,12 +6,16 @@
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    background-color: white;
+    height: 100%;
+    padding: 10px 15px 15px 15px;
+
 
 }
 
 .console__request_input {
     width: 100%;
-    height: 95%;
+    height: 99%;
     appearance: none;
     border: 1px solid black;
     padding: 10px;
@@ -21,7 +25,7 @@
 }
 
 .console__request_input, .console__response_field {
-    height: 80vh;
+/*height: 74vh;*/
 }
 
 .console__response {

@@ -6,7 +6,8 @@ export const consoleActions = {
   changeRequestText: (body: string) =>
     createAction('CHANGE_REQUEST_BODY', body),
   deleteRequest: (request: Request) => createAction('DELETE_REQUEST', request),
-
+  changeRequestResponse: (body: string) =>
+    createAction('CHANGE_REQUEST_RESPONSE', body),
   changeCurrentRequest: (request: Request) =>
     createAction('CHANGE_CURRENT_REQUEST', request),
 
@@ -36,5 +37,8 @@ export type IsRequestErrorType = ReturnType<
 >
 export type IsResponseErrorType = ReturnType<
   typeof consoleActions.setIsResponseError
+>
+export type ChangeRequestResponseType = ReturnType<
+  typeof consoleActions.changeRequestResponse
 >
 export type ConsoleActionsType = InferActionTypes<typeof consoleActions>

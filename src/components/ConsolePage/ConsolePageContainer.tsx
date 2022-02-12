@@ -18,22 +18,8 @@ import { RootState } from 'store/store'
 import { loginActions } from 'store/actions/login/loginActions'
 import { consoleActions } from 'store/actions/console/consoleActions'
 import { runRequest } from 'store/thunks/consoleThunks'
+import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 
-// type MapState = {
-//     currentRequest: Request,
-//     requestHistory: Array<Request>,
-//     isRequestError: boolean,
-//     isResponseError: boolean
-//     auth: AuthResult,
-// }
-// type DispatchState = {
-//     changeRequestBody: (body: string) => ChangeRequestBodyActionType
-//     changeCurrentRequest: (request: Request) =>
-//         ChangeCurrentRequestActionType
-//     setAuthResult: (authResult: AuthResult) =>
-//         SetAuthResultActionType
-//     runRequest: (body: string) => void
-// }
 type Props = ReduxProps
 
 const ConsolePageContainer = ({
@@ -47,7 +33,7 @@ const ConsolePageContainer = ({
   setAuthResult,
 }: Props) => {
   const navigate = useNavigate()
-
+  const handle = useFullScreenHandle()
   useEffect(() => {
     if (localStorage.getItem('sendsay_session')) {
       authWithSession().then((res) => {
@@ -58,7 +44,9 @@ const ConsolePageContainer = ({
       navigate('/')
     }
   }, [])
-
+  const onFullScreen = () => {
+    handle.active ? handle.exit() : handle.enter()
+  }
   const onLogout = () => {
     localStorage.removeItem('sendsay_session')
     logout().then((res) => {
@@ -72,16 +60,19 @@ const ConsolePageContainer = ({
   }
 
   return (
-    <ConsolePage
-      onSubmitRequest={onSubmitRequest}
-      currentRequest={currentRequest}
-      changeRequestBody={changeRequestBody}
-      requestHistory={requestHistory}
-      isRequestError={isRequestError}
-      isResponseError={isResponseError}
-      auth={auth}
-      onLogout={onLogout}
-    />
+    <FullScreen handle={handle}>
+      <ConsolePage
+        onSubmitRequest={onSubmitRequest}
+        currentRequest={currentRequest}
+        changeRequestBody={changeRequestBody}
+        requestHistory={requestHistory}
+        isRequestError={isRequestError}
+        isResponseError={isResponseError}
+        auth={auth}
+        onLogout={onLogout}
+        onFullScreen={onFullScreen}
+      />
+    </FullScreen>
   )
 }
 

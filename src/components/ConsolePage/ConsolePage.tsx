@@ -16,6 +16,7 @@ type PropsType = {
   isResponseError: boolean,
   auth: AuthResult,
   onLogout: () => void,
+  onFullScreen: () => void,
 }
 const ConsolePage = ({
   currentRequest,
@@ -25,6 +26,7 @@ const ConsolePage = ({
   isRequestError,
   isResponseError,
   auth,
+  onFullScreen,
   onLogout,
 }: PropsType) => {
   const onCurrentRequestTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -32,8 +34,8 @@ const ConsolePage = ({
   }
 
   return (
-    <div>
-      <Header auth={auth} onLogout={onLogout} />
+    <div className="console-page">
+      <Header auth={auth} onLogout={onLogout} onFullScreen={onFullScreen} />
       <RequestHistory requestHistory={requestHistory} />
       <Console
         currentRequest={currentRequest}

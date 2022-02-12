@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import RequestHistoryItem from 'components/ConsolePage/RequestHistory/RequestHistoryItem/RequestHistoryItem'
 import { connect, ConnectedProps } from 'react-redux'
 import { consoleActions } from 'store/actions/console/consoleActions'
 import { Request } from 'store/reducers/consoleReducer'
-
+import { runRequest } from 'store/thunks/consoleThunks'
 type OwnPropsType = {
   request: Request,
 }
@@ -12,13 +12,10 @@ type PropsType = OwnPropsType & ReduxPropsType
 const RequestHistoryItemContainer = ({
   request,
   changeCurrentRequestText,
-  addRequestToHistory,
-  changeCurrentRequest,
+  changeRequestResponse,
   deleteRequest,
+  runRequest,
 }: PropsType) => {
-  const onChangeCurrentRequestText = (body: string) => {
-    changeCurrentRequestText(body)
-  }
   const onDeleteRequest = (request: Request) => {
     deleteRequest(request)
   }
@@ -26,16 +23,21 @@ const RequestHistoryItemContainer = ({
     console.log('1')
   }
   const onRunRequest = (request: Request) => {
-    addRequestToHistory(request)
-    changeCurrentRequest(request)
+    runRequest(request.requestText)
+  }
+  // I Supposed, when you click to request, response-window should be cleared
+  // Because, even if request body is former, response can be different
+  const onHistoryItemClick = (request: Request) => {
+    changeCurrentRequestText(request.requestText)
+    changeRequestResponse('{}')
   }
 
   return (
     <RequestHistoryItem
-      onChangeCurrentRequestText={onChangeCurrentRequestText}
       onDeleteRequest={onDeleteRequest}
       onCopyRequest={onCopyRequest}
       onRunRequest={onRunRequest}
+      onHistoryItemClick={onHistoryItemClick}
       request={request}
     />
   )
@@ -43,9 +45,9 @@ const RequestHistoryItemContainer = ({
 
 const connector = connect(null, {
   changeCurrentRequestText: consoleActions.changeRequestText,
-  addRequestToHistory: consoleActions.addRequestToHistory,
-  changeCurrentRequest: consoleActions.changeCurrentRequest,
+  runRequest: runRequest,
   deleteRequest: consoleActions.deleteRequest,
+  changeRequestResponse: consoleActions.changeRequestResponse,
 })
 
 export default connector(RequestHistoryItemContainer)

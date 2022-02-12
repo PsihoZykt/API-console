@@ -1,43 +1,49 @@
-import { Request, RequestStatus } from 'store/reducers/consoleReducer'
-import { ExpandElement } from 'common/DragElement/DragElement'
-import React from 'react'
+import {Request, RequestStatus} from 'store/reducers/consoleReducer'
+import {ExpandElement} from 'common/DragElement/DragElement'
+import React, {useRef, useState} from 'react'
 import './RequestHistoryItem.css'
 
 type PropTypes = {
-  onChangeCurrentRequestText: (body: string) => void,
-  onDeleteRequest: (request: Request) => void,
-  onCopyRequest: (request: Request) => void,
-  onRunRequest: (request: Request) => void,
-  request: Request,
+    onDeleteRequest: (request: Request) => void,
+    onCopyRequest: (request: Request) => void,
+    onRunRequest: (request: Request) => void,
+    onHistoryItemClick: (request: Request) => void
+    request: Request,
 }
 const RequestHistoryItem = ({
-  request,
-  onChangeCurrentRequestText,
-  onRunRequest,
-  onDeleteRequest,
-  onCopyRequest,
-}: PropTypes) => {
-  const statusClass =
-    request.status === RequestStatus.Successful
-      ? 'status_successful'
-      : 'status_unsuccessful'
-  return (
-    <div
-      onClick={() => onChangeCurrentRequestText(request.requestText)}
-      // onClick={() => onDeleteRequest(request)}
-      className="history__item"
-    >
-      <div className={statusClass} />
-      <div>{JSON.parse(request.requestText).action}</div>
-      <ExpandElement
-        className="history__item_expand"
-        onCopyRequest={onCopyRequest}
-        onRunRequest={onRunRequest}
-        request={request}
-        onDeleteRequest={onDeleteRequest}
-      />
-    </div>
-  )
+                                request,
+                                onRunRequest,
+                                onHistoryItemClick,
+                                onDeleteRequest,
+                                onCopyRequest,
+                            }: PropTypes) => {
+    const statusClass =
+        request.status === RequestStatus.Successful
+            ? 'status_successful'
+            : 'status_unsuccessful'
+    const ref = useRef<HTMLDivElement>(null)
+    const [leftOffset, setLeftOffset] = useState<number >(0)
+
+    return (
+        <div
+            onClick={(e) => {
+                setLeftOffset(e.clientX)
+                onHistoryItemClick(request)
+            }}
+            className="history__item"
+            ref={ref}
+        >
+            <div className={statusClass}/>
+            <div>{JSON.parse(request.requestText).action}</div>
+            <ExpandElement
+                onCopyRequest={onCopyRequest}
+                onRunRequest={onRunRequest}
+                request={request}
+                onDeleteRequest={onDeleteRequest}
+                leftOffset={leftOffset}
+            />
+        </div>
+    )
 }
 
 export default RequestHistoryItem

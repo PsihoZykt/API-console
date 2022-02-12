@@ -2,6 +2,7 @@ import { makeRequest } from 'api/sendsay'
 import { RequestStatus } from 'store/reducers/consoleReducer'
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from 'store/store'
+import { v4 as randomID } from 'uuid'
 import {
   consoleActions,
   ConsoleActionsType,
@@ -29,7 +30,7 @@ export const runRequest =
         ? RequestStatus.Successful
         : RequestStatus.Unsuccessful
 
-      const id = response['_ehid']
+      const id = randomID()
       const requestText = body
       const requestResponse = JSON.stringify(response)
       const newRequest = { status, id, requestText, requestResponse }

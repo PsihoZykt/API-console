@@ -1,5 +1,4 @@
 import Sendsay from 'sendsay-api'
-
 const auth = async (login, sublogin, password) => {
   const sendsay = new Sendsay()
   try {

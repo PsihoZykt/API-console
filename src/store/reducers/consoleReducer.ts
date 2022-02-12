@@ -2,6 +2,7 @@ import {
   AddRequestToHistoryType,
   ChangeCurrentRequestActionType,
   ChangeRequestBodyActionType,
+  ChangeRequestResponseType,
   ConsoleActionsType,
   DeleteRequestActionType,
   IsRequestErrorType,
@@ -35,13 +36,112 @@ const initialState: ConsoleState = {
   sublogin: '',
   isRequestError: false,
   isResponseError: false,
-  requestHistory: [],
+  requestHistory: [
+    {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    },
+    {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    },
+    {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    },
+    {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    },
+    {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }
+
+
+  ],
   currentRequest: {
     id: '1',
     status: RequestStatus.NotSubmitted,
     requestText: '{"action": "pong"}',
     requestResponse: '{}',
   },
+
 }
 const changeRequestBody = (
   state: ConsoleState,
@@ -65,10 +165,34 @@ const changeCurrentRequest = (
 const addRequestToHistory = (
     state: ConsoleState,
     action: AddRequestToHistoryType
-): ConsoleState => ({
-  ...state,
-  requestHistory: [...state.requestHistory, action.payload],
-})
+): ConsoleState => {
+  const newRequestHistory = [...state.requestHistory]
+
+  let uniqRequestHistoryItemIndex = 0;
+  const uniqRequestHistoryItem = newRequestHistory.find((request, index) => {
+    const parsedRequestText = JSON.parse(request.requestText)
+    const parsedActionText = JSON.parse(action.payload.requestText)
+    //TODO: What if actions is undefined?
+    if (parsedRequestText.action === parsedActionText.action) {
+      uniqRequestHistoryItemIndex = index
+      return request
+    }
+  })
+  if (uniqRequestHistoryItem) {
+    newRequestHistory.splice(0, 0, newRequestHistory.splice(uniqRequestHistoryItemIndex, 1)[0]);
+  } else {
+    newRequestHistory.push(action.payload)
+  }
+
+  if (newRequestHistory.length > 15) {
+    newRequestHistory.pop()
+  }
+
+  return {
+    ...state,
+    requestHistory: newRequestHistory
+  }
+}
 const deleteRequest = (
     state: ConsoleState,
     action: DeleteRequestActionType
@@ -85,6 +209,13 @@ const setIsRequestError = (state: ConsoleState, action: IsRequestErrorType): Con
 const setIsResponseError = (state: ConsoleState, action: IsResponseErrorType): ConsoleState => ({
   ...state,
   isResponseError: action.payload
+})
+const changeRequestResponse = (state: ConsoleState, action: ChangeRequestResponseType): ConsoleState => ({
+  ...state,
+  currentRequest: {
+    ...state.currentRequest,
+    requestResponse: action.payload,
+  },
 })
 export default function consoleReducer(
     state = initialState,
@@ -103,6 +234,8 @@ export default function consoleReducer(
       return setIsRequestError(state, action)
     case "SET_IS_RESPONSE_ERROR":
       return setIsResponseError(state, action)
+    case "CHANGE_REQUEST_RESPONSE":
+      return changeRequestResponse(state, action)
     default:
       return state
   }

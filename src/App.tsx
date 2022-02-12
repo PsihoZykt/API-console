@@ -5,9 +5,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import store from './store/store'
 import LoginPage from './components/LoginPage/LoginPageContainer'
 import ConsolePage from './components/ConsolePage/ConsolePageContainer'
+import 'normalize.css'
 
 const App = () => (
-  <div className="App">
+  <div className="app">
     <BrowserRouter>
       <Provider store={store}>
         <Routes>
