@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import RequestHistoryItem from 'components/ConsolePage/RequestHistory/RequestHistoryItem/RequestHistoryItem'
 import { connect, ConnectedProps } from 'react-redux'
 import { consoleActions } from 'store/actions/console/consoleActions'
 import { Request } from 'store/reducers/consoleReducer'
 import { runRequest } from 'store/thunks/consoleThunks'
+
 type OwnPropsType = {
   request: Request,
 }

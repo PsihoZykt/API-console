@@ -8,16 +8,24 @@ type PropTypes = {
 }
 const RequestHistory = ({ requestHistory }: PropTypes) => {
   const elRef = useRef<HTMLDivElement>(null)
+  const [scroll, setScroll] = useState(false)
+
   useEffect(() => {
     const el = elRef.current
     if (el) {
       const onWheel = (e: any) => {
         if (e.deltaY == 0) return
         e.preventDefault()
+        setScroll(true)
+        console.log(el.offsetWidth + el.scrollLeft)
+        console.log(el.scrollWidth)
         el.scrollTo({
           left: el.scrollLeft + e.deltaY * 15,
-          // behavior: 'smooth',
+          behavior: 'smooth',
         })
+        if (el.offsetWidth + el.scrollLeft >= el.scrollWidth - 30) {
+          setScroll(false)
+        }
       }
       el.addEventListener('wheel', onWheel)
       return () => el.removeEventListener('wheel', onWheel)
@@ -28,7 +36,7 @@ const RequestHistory = ({ requestHistory }: PropTypes) => {
   ))
   return (
     <div className="history-relative">
-      <div ref={elRef} className="history">
+      <div ref={elRef} className={`history ${scroll && 'scrolling'}`}>
         {historyElement}
       </div>
     </div>

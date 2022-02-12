@@ -33,7 +33,6 @@ const Textarea = ({onCurrentRequestTextChange, currentRequest, isRequestError}: 
 
   const onDragMouseDown = (evt: React.MouseEvent<HTMLDivElement>) => {
     startResize(evt)
-
     document.addEventListener('mousemove', resize)
     resizeDrag.current.addEventListener('mouseup', function () {
       document.removeEventListener('mousemove', resize)
@@ -42,7 +41,6 @@ const Textarea = ({onCurrentRequestTextChange, currentRequest, isRequestError}: 
     document.addEventListener('mouseup', () => {
       document.removeEventListener('mousemove', resize)
     })
-
   }
   return (
       <div className="cTargetContener" id="idTargetContener">

@@ -44,7 +44,7 @@ export const ExpandElement = ({
     }
   }, [])
 
-  const onExpandClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onExpand = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsExpanded(true)
   }
   const onRun = () => {
@@ -63,18 +63,19 @@ export const ExpandElement = ({
     return isExpanded ? 'expand-expanded' : 'expand-hidden'
   }
   const expandedRef = useRef<HTMLDivElement>(null)
-
   return (
     <div className="expand">
       <div
-        onClick={(e) => onExpandClick(e)}
+        onClick={(e) => onExpand(e)}
         ref={expandElementRef}
         className="expand-element"
       >
         <DragElement />
       </div>
       <div
-        style={{ left: leftOffset - 70 }}
+        style={{
+          left: leftOffset - 80,
+        }}
         ref={expandedRef}
         className={getExpandedClass()}
       >

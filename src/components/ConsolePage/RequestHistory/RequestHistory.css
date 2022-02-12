@@ -5,13 +5,35 @@
     gap: 10px;
     border-top: 1px solid rgba(0, 0, 0, 0.2);
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    overflow: scroll;
+    box-sizing: border-box;
     max-width: 100%;
-    overflow: hidden;
+    /*white-space: nowrap;*/
+    /*overflow: auto;*/
     /* Hide scrollbar for IE, Edge add Firefox */
-    /*-ms-overflow-style: none;*/
-    /*scrollbar-width: none; !* Firefox *!*/
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
     /*z-index: 200;*/
     /*position: static;*/
+
+}
+
+.scrolling::after {
+    content: '';
+    height: 80%;
+    width: 3%;
+    display: block;
+    position: absolute;
+    pointer-events: none;
+    right: 0;
+    background: rgba(255, 255, 255, 1);
+    background: -moz-linear-gradient(right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    background: -webkit-gradient(right top, right top, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(100%, rgba(255, 255, 255, 0)));
+    background: -webkit-linear-gradient(right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    background: -o-linear-gradient(right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    background: -ms-linear-gradient(right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1);
 }
 
 
@@ -20,5 +42,5 @@
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .history::-webkit-scrollbar {
-    /*display: none;*/
+    display: none;
 }

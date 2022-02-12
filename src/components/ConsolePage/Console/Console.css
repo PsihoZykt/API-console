@@ -50,7 +50,7 @@
 }
 
 .console__request_input, .console__response_field {
-    /*height: 74vh;*/
+    height: 74vh;
 }
 
 .console__response {

@@ -37,7 +37,6 @@ const ConsolePageContainer = ({
   useEffect(() => {
     if (localStorage.getItem('sendsay_session')) {
       authWithSession().then((res) => {
-        console.log(res)
         setAuthResult(res)
       })
     } else {

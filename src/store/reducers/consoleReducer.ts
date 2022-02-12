@@ -131,7 +131,23 @@ const initialState: ConsoleState = {
       status: RequestStatus.NotSubmitted,
       requestText: '{"action": "pong"}',
       requestResponse: '{}',
-    }
+    },
+    {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    }, {
+      id: '1',
+      status: RequestStatus.NotSubmitted,
+      requestText: '{"action": "pong"}',
+      requestResponse: '{}',
+    },
 
 
   ],
@@ -141,6 +157,7 @@ const initialState: ConsoleState = {
     requestText: '{"action": "pong"}',
     requestResponse: '{}',
   },
+
 
 }
 const changeRequestBody = (
