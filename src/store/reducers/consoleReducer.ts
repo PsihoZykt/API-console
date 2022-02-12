@@ -2,7 +2,7 @@ import {
   AddRequestToHistoryType,
   ChangeCurrentRequestActionType,
   ChangeRequestBodyActionType,
-  ChangeRequestResponseType,
+  ChangeRequestResponseType, ClearRequestHistoryType,
   ConsoleActionsType,
   DeleteRequestActionType,
   IsRequestErrorType,
@@ -211,13 +211,20 @@ const addRequestToHistory = (
   }
 }
 const deleteRequest = (
-    state: ConsoleState,
-    action: DeleteRequestActionType
+  state: ConsoleState,
+  action: DeleteRequestActionType
 ): ConsoleState => ({
   ...state,
   requestHistory: state.requestHistory.filter((request) => {
     return request.id !== action.payload.id
   }),
+})
+const clearRequestHistory = (
+  state: ConsoleState,
+  action: ClearRequestHistoryType
+): ConsoleState => ({
+  ...state,
+  requestHistory: []
 })
 const setIsRequestError = (state: ConsoleState, action: IsRequestErrorType): ConsoleState => ({
   ...state,
@@ -253,6 +260,8 @@ export default function consoleReducer(
       return setIsResponseError(state, action)
     case "CHANGE_REQUEST_RESPONSE":
       return changeRequestResponse(state, action)
+    case "CLEAR_REQUEST_HISTORY":
+      return clearRequestHistory(state, action)
     default:
       return state
   }

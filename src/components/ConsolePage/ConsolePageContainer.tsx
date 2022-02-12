@@ -31,6 +31,7 @@ const ConsolePageContainer = ({
   auth,
   runRequest,
   setAuthResult,
+  clearRequestHistory,
 }: Props) => {
   const navigate = useNavigate()
   const handle = useFullScreenHandle()
@@ -67,6 +68,7 @@ const ConsolePageContainer = ({
         requestHistory={requestHistory}
         isRequestError={isRequestError}
         isResponseError={isResponseError}
+        clearRequestHistory={clearRequestHistory}
         auth={auth}
         onLogout={onLogout}
         onFullScreen={onFullScreen}
@@ -91,6 +93,7 @@ const connector = connect(
       consoleActions.changeCurrentRequest(request),
     setAuthResult: (authResult: AuthResult) =>
       loginActions.setAuthResultAction(authResult),
+    clearRequestHistory: () => consoleActions.clearRequestHistory(),
     runRequest,
   }
 )

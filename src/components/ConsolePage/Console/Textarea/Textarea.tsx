@@ -26,8 +26,8 @@ const Textarea = ({onCurrentRequestTextChange, currentRequest, isRequestError}: 
     dx = evt.screenX - x
     x = evt.screenX
     wd += dx
-    if (wd < 200) wd = 200
-    if (wd > 1400) wd = 1400
+    if (wd < 400) wd = 400
+    if (wd > window.innerWidth - 400) wd = window.innerWidth - 400
     setWidth(wd)
   }
 
@@ -43,24 +43,27 @@ const Textarea = ({onCurrentRequestTextChange, currentRequest, isRequestError}: 
     })
   }
   return (
-      <div className="cTargetContener" id="idTargetContener">
-        <div ref={wrapperRef} id="container">
-          <div className={"console__request_input " + getErrorClass(isRequestError)} style={{width: width + 'px'}} id="resizable">
-          <textarea
-              className={`console__request_textarea`}
-              onChange={(e) => onCurrentRequestTextChange(e)}
-              value={currentRequest.requestText}
-          />
-          </div>
-          <div
-              onMouseDown={(evt) => onDragMouseDown(evt)}
-              ref={resizeDrag}
-              id="rsz"
-          >
-            <DragElement/>
-          </div>
+    <div className="console__request">
+      <div>Запрос</div>
+      {/*<div className={"console__request_input"}*/}
+      {/*     style={{width: width + 'px'}}>*/}
+      <div ref={wrapperRef} style={{width: width + 'px'}} className={"console__request__textarea_wrapper"}>
+    <textarea
+      className={`console__request__textarea ${getErrorClass(isRequestError)}`}
+      onChange={(e) => onCurrentRequestTextChange(e)}
+      value={currentRequest.requestText}
+    />
+
+        <div
+          onMouseDown={(evt) => onDragMouseDown(evt)}
+          ref={resizeDrag}
+          className="console__resizer"
+        >
+          <DragElement/>
         </div>
       </div>
+    </div>
+    // </div>
   )
 }
 

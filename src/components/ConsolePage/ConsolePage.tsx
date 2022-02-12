@@ -17,6 +17,7 @@ type PropsType = {
   auth: AuthResult,
   onLogout: () => void,
   onFullScreen: () => void,
+  clearRequestHistory: () => void,
 }
 const ConsolePage = ({
   currentRequest,
@@ -25,6 +26,7 @@ const ConsolePage = ({
   requestHistory,
   isRequestError,
   isResponseError,
+  clearRequestHistory,
   auth,
   onFullScreen,
   onLogout,
@@ -36,7 +38,10 @@ const ConsolePage = ({
   return (
     <div className="console-page">
       <Header auth={auth} onLogout={onLogout} onFullScreen={onFullScreen} />
-      <RequestHistory requestHistory={requestHistory} />
+      <RequestHistory
+        clearRequestHistory={clearRequestHistory}
+        requestHistory={requestHistory}
+      />
       <Console
         currentRequest={currentRequest}
         onCurrentRequestTextChange={onCurrentRequestTextChange}

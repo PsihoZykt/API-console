@@ -1,13 +1,18 @@
-.console__request .error {
+.console__request__textarea.error {
 
     border: 1px solid #CF2C00;
     box-sizing: border-box;
     box-shadow: 0 0 5px rgba(207, 44, 0, 0.5);
-
     border-radius: 5px;
 
 }
+.console__request__wrapper {
 
+
+}
+.console__request_input {
+
+}
 .console__response .error {
     border: 1px solid #CF2C00;
     box-sizing: border-box;
@@ -20,52 +25,53 @@
 .console {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     background-color: white;
-    height: 100%;
-    padding: 10px 15px 15px 15px;
-
+    /*padding: 10px 15px 15px 15px;*/
+box-sizing: border-box;
 
 }
 
 
-.console__request_input {
+.console__request__textarea {
     width: 100%;
-    height: 99%;
-
-    padding: 10px;
+    resize: none;
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     border-radius: 5px;
-}
+    height: 100%;
 
-.console__request_textarea {
-    width: 100%;
-    height: 99%;
-
-    appearance: none;
-    resize: none;
-    border: none
 
 }
-
+.console__request {
+    padding: 15px 0 15px 15px;
+}
+.console__response {
+    padding: 15px 15px 15px 10px;
+}
 .console__request_input, .console__response_field {
-    height: 74vh;
+    /*height: 100vh;*/
+    /*max-height: 100vh;*/
 }
 
 .console__response {
     margin: 0;
-    width: 100%;
     overflow-x: hidden;
+    width: 100%;
+    min-width: 200px;
+    display: flex;
+    flex-flow: column nowrap;
 
 }
 
 .console__response_field {
     margin: 0;
-    resize: horizontal;
+    resize: none;
     box-sizing: border-box;
     padding: 10px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 5px;
+    flex-basis: 100%;
+
 
 }

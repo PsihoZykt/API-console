@@ -14,21 +14,18 @@ const Console = ({isRequestError, isResponseError, onCurrentRequestTextChange, c
 
   return (
       <div className="console">
-        <div className={'console__request'}>
-          <div>Запрос</div>
           <Textarea
               onCurrentRequestTextChange={onCurrentRequestTextChange}
               currentRequest={currentRequest}
               isRequestError={isRequestError}
           />
-        </div>
         <div
             className={'console__response'}
         >
           Ответ
-          <pre className={`console__response_field + ' ' + ${getErrorClass(isResponseError)}`}>
+          <div className={`console__response_field ${getErrorClass(isResponseError)}`}>
           {JSON.stringify(JSON.parse(currentRequest.requestResponse), null, 2)}
-        </pre>
+        </div>
         </div>
       </div>
   )
