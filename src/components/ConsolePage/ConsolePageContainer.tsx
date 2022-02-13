@@ -6,6 +6,7 @@ import {
   getCurrentRequest,
   getIsRequestError,
   getIsResponseError,
+  getRequestConsoleWIdth,
   getRequestHistory,
 } from 'store/selectors/consolePage/selector'
 import { Request } from 'store/reducers/consoleReducer'
@@ -37,6 +38,8 @@ const ConsolePageContainer = ({
   credentials,
   clearRequestHistory,
   setCredentials,
+  setRequestConsoleWidth,
+  requestConsoleWidth,
 }: Props) => {
   const navigate = useNavigate()
   const fullScreen = useFullScreenHandle()
@@ -83,6 +86,8 @@ const ConsolePageContainer = ({
         credentials={credentials}
         fullScreen={fullScreen}
         onFormatting={onFormatting}
+        setRequestConsoleWidth={setRequestConsoleWidth}
+        requestConsoleWidth={requestConsoleWidth}
       />
     </FullScreen>
   )
@@ -96,6 +101,7 @@ const connector = connect(
       isRequestError: getIsRequestError(state),
       isResponseError: getIsResponseError(state),
       credentials: getCredentials(state),
+      requestConsoleWidth: getRequestConsoleWIdth(state),
       auth: getAuthResult(state),
     }
   },
@@ -108,6 +114,8 @@ const connector = connect(
     clearRequestHistory: () => consoleActions.clearRequestHistory(),
     setCredentials: (credentials: Credentials) =>
       loginActions.setCredentials(credentials),
+    setRequestConsoleWidth: (width: number) =>
+      consoleActions.setRequestConsoleWidth(width),
     runRequest,
   }
 )

@@ -90,7 +90,7 @@ export const ExpandElement = ({
           onClick={onCopy}
         >
           <CopyToClipboard text={request.requestText}>
-            <span> Скопировать</span>
+            <span> {} Скопировать</span>
           </CopyToClipboard>
         </div>
         <div className="delimiter"> </div>

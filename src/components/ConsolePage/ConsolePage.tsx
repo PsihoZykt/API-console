@@ -20,6 +20,8 @@ type PropsType = {
   clearRequestHistory: () => void,
   credentials: Credentials,
   onFormatting: (body: string) => void,
+  setRequestConsoleWidth : (width: number) => void
+  requestConsoleWidth: number,
 }
 const ConsolePage = ({
   currentRequest,
@@ -34,6 +36,8 @@ const ConsolePage = ({
   fullScreen,
   onLogout,
   onFormatting,
+  setRequestConsoleWidth,
+  requestConsoleWidth
 }: PropsType) => {
   const onCurrentRequestTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     changeRequestBody(e.target.value)
@@ -56,6 +60,8 @@ const ConsolePage = ({
         onCurrentRequestTextChange={onCurrentRequestTextChange}
         isRequestError={isRequestError}
         isResponseError={isResponseError}
+        setRequestConsoleWidth={setRequestConsoleWidth}
+        requestConsoleWidth={requestConsoleWidth}
       />
       <Footer
         onSubmitRequest={onSubmitRequest}

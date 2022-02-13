@@ -20,6 +20,8 @@ export const consoleActions = {
   setIsResponseError: (isError: boolean) =>
     createAction('SET_IS_RESPONSE_ERROR', isError),
   clearRequestHistory: () => createAction('CLEAR_REQUEST_HISTORY', null),
+  setRequestConsoleWidth: (width: number) =>
+    createAction('SET_REQUEST_CONSOLE_WIDTH', width),
 }
 export type ChangeRequestBodyActionType = ReturnType<
   typeof consoleActions.changeRequestText
@@ -44,5 +46,8 @@ export type ChangeRequestResponseType = ReturnType<
 >
 export type ClearRequestHistoryType = ReturnType<
   typeof consoleActions.clearRequestHistory
+>
+export type SetRequestConsoleWidthType = ReturnType<
+  typeof consoleActions.setRequestConsoleWidth
 >
 export type ConsoleActionsType = InferActionTypes<typeof consoleActions>

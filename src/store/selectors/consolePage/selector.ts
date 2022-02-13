@@ -13,3 +13,6 @@ export const getIsRequestError = (state: RootState): boolean => {
 export const getIsResponseError = (state: RootState): boolean => {
   return state.consolePage.isResponseError
 }
+export const getRequestConsoleWIdth = (state: RootState): number => {
+  return state.consolePage.requestConsoleWidth
+}

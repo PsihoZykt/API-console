@@ -5,19 +5,20 @@ import {Request} from "store/reducers/consoleReducer";
 
 type PropTypes = {
   onCurrentRequestTextChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
+  setRequestConsoleWidth: (width: number) => void
   currentRequest: Request
   isRequestError: boolean
+  requestConsoleWidth: number
 }
-const Textarea = ({onCurrentRequestTextChange, currentRequest, isRequestError}: PropTypes) => {
+const Textarea = ({onCurrentRequestTextChange, currentRequest, isRequestError, setRequestConsoleWidth, requestConsoleWidth}: PropTypes) => {
   const resizeDrag = useRef<HTMLDivElement>(null) as MutableRefObject<HTMLDivElement>;
   const wrapperRef = useRef<HTMLDivElement>(null) as MutableRefObject<HTMLDivElement>;
-  const [width, setWidth] = useState(200)
   const getErrorClass = (isError: boolean) => (isError ? 'error' : '')
 
 
   let x: number
   let dx: number
-  let wd = width;
+  let wd = requestConsoleWidth;
   const startResize = function (evt: React.MouseEvent<HTMLDivElement>) {
     x = evt.screenX
   }
@@ -28,7 +29,7 @@ const Textarea = ({onCurrentRequestTextChange, currentRequest, isRequestError}: 
     wd += dx
     if (wd < 400) wd = 400
     if (wd > window.innerWidth - 400) wd = window.innerWidth - 400
-    setWidth(wd)
+    setRequestConsoleWidth(wd)
   }
 
   const onDragMouseDown = (evt: React.MouseEvent<HTMLDivElement>) => {
@@ -46,7 +47,7 @@ const Textarea = ({onCurrentRequestTextChange, currentRequest, isRequestError}: 
     <div className="console__request">
       <div>Запрос</div>
 
-      <div ref={wrapperRef} style={{width: width + 'px'}} className={"console__request__textarea_wrapper"}>
+      <div ref={wrapperRef} style={{width: requestConsoleWidth + 'px'}} className={"console__request__textarea_wrapper"}>
     <textarea
       className={`console__request__textarea ${getErrorClass(isRequestError)}`}
       onChange={(e) => onCurrentRequestTextChange(e)}

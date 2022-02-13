@@ -43,7 +43,7 @@
 .expand-element__item-delete:hover {
     background-color: #CF2C00;
     cursor: pointer;
-color: white;
+    color: white;
 }
 
 .expand-element__item {
