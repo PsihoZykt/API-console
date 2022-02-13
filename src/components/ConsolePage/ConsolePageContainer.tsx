@@ -39,7 +39,7 @@ const ConsolePageContainer = ({
   setCredentials,
 }: Props) => {
   const navigate = useNavigate()
-  const handle = useFullScreenHandle()
+  const fullScreen = useFullScreenHandle()
   useEffect(() => {
     if (localStorage.getItem('sendsay_session')) {
       const login = localStorage.getItem('login')
@@ -52,9 +52,6 @@ const ConsolePageContainer = ({
       navigate('/')
     }
   }, [])
-  const onFullScreen = () => {
-    handle.active ? handle.exit() : handle.enter()
-  }
   const onLogout = () => {
     localStorage.removeItem('sendsay_session')
     localStorage.removeItem('login')
@@ -72,7 +69,7 @@ const ConsolePageContainer = ({
   }
 
   return (
-    <FullScreen handle={handle}>
+    <FullScreen handle={fullScreen}>
       <ConsolePage
         onSubmitRequest={onSubmitRequest}
         currentRequest={currentRequest}
@@ -84,7 +81,7 @@ const ConsolePageContainer = ({
         auth={auth}
         onLogout={onLogout}
         credentials={credentials}
-        onFullScreen={onFullScreen}
+        fullScreen={fullScreen}
         onFormatting={onFormatting}
       />
     </FullScreen>

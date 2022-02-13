@@ -16,7 +16,7 @@ type PropsType = {
   isResponseError: boolean,
   auth: AuthResult,
   onLogout: () => void,
-  onFullScreen: () => void,
+  fullScreen: any,
   clearRequestHistory: () => void,
   credentials: Credentials,
   onFormatting: (body: string) => void,
@@ -31,7 +31,7 @@ const ConsolePage = ({
   clearRequestHistory,
   auth,
   credentials,
-  onFullScreen,
+  fullScreen,
   onLogout,
   onFormatting,
 }: PropsType) => {
@@ -44,7 +44,7 @@ const ConsolePage = ({
       <Header
         auth={auth}
         onLogout={onLogout}
-        onFullScreen={onFullScreen}
+        fullScreen={fullScreen}
         credentials={credentials}
       />
       <RequestHistory
