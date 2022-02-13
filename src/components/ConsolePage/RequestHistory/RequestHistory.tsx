@@ -10,20 +10,21 @@ type PropTypes = {
 const RequestHistory = ({ requestHistory, clearRequestHistory }: PropTypes) => {
   const elRef = useRef<HTMLDivElement>(null)
   const [scroll, setScroll] = useState(false)
-
   useEffect(() => {
     const el = elRef.current
     if (el) {
       const onWheel = (e: any) => {
+        setScroll(true)
+
         if (e.deltaY == 0) return
         e.preventDefault()
-        setScroll(true)
 
         el.scrollTo({
           left: el.scrollLeft + e.deltaY * 15,
           behavior: 'smooth',
         })
-        if (el.offsetWidth + el.scrollLeft >= el.scrollWidth - 30) {
+
+        if (el.offsetWidth + el.scrollLeft + e.deltaY * 15 >= el.scrollWidth) {
           setScroll(false)
         }
       }
@@ -39,10 +40,13 @@ const RequestHistory = ({ requestHistory, clearRequestHistory }: PropTypes) => {
   }
   return (
     <div className="history-relative">
-      <div ref={elRef} className={`history ${scroll && 'scrolling'}`}>
+      <div ref={elRef} className={`history `}>
         {historyElement}
       </div>
-      <div className="history__clear" onClick={clearRequestHistory}>
+      <div
+        className={`history__clear ${scroll ? 'scrolling' : ''}`}
+        onClick={clearRequestHistory}
+      >
         <img src={clear} alt="X symbol" />
       </div>
     </div>

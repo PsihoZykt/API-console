@@ -28,7 +28,7 @@
     align-items: center;
     background: #F6F6F6;
 }
-.history__clear::before {
+.scrolling::before {
     content: '';
     height: 100%;
     width: 40px;
@@ -57,4 +57,8 @@
 /* Hide scrollbar for Chrome, Safari and Opera */
 .history::-webkit-scrollbar {
     display: none;
+}
+.padding-placeholder {
+    width: 10px;
+    height: 50px;
 }
