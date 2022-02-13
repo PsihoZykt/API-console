@@ -25,6 +25,7 @@ const LoginForm: React.FC<ReduxFormPropsType> =
          authResult,
          isLoading,
          submitting,
+      valid
      }) => (
         <form onSubmit={(e) => handleSubmit(e)} className="login-form">
             <div className="login-form__header">API-консолька</div>
@@ -46,7 +47,7 @@ const LoginForm: React.FC<ReduxFormPropsType> =
                 name="password"
             />
 
-            <button disabled={submitting} type="submit" className="login-form__submit">
+            <button disabled={!valid} type="submit" className="login-form__submit">
                 {isLoading ? <Loader/> : 'Войти'}
             </button>
         </form>
