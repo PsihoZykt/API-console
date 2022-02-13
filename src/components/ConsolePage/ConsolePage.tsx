@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react'
 import { Request } from 'store/reducers/consoleReducer'
 import './ConsolePage.css'
-import { AuthResult } from 'store/reducers/loginReducer'
+import { AuthResult, Credentials } from 'store/reducers/loginReducer'
 import Footer from 'components/ConsolePage/Footer/Footer'
 import RequestHistory from 'components/ConsolePage/RequestHistory/RequestHistory'
 import Console from 'components/ConsolePage/Console/Console'
@@ -18,6 +18,7 @@ type PropsType = {
   onLogout: () => void,
   onFullScreen: () => void,
   clearRequestHistory: () => void,
+  credentials: Credentials,
 }
 const ConsolePage = ({
   currentRequest,
@@ -28,6 +29,7 @@ const ConsolePage = ({
   isResponseError,
   clearRequestHistory,
   auth,
+  credentials,
   onFullScreen,
   onLogout,
 }: PropsType) => {
@@ -37,7 +39,12 @@ const ConsolePage = ({
 
   return (
     <div className="console-page">
-      <Header auth={auth} onLogout={onLogout} onFullScreen={onFullScreen} />
+      <Header
+        auth={auth}
+        onLogout={onLogout}
+        onFullScreen={onFullScreen}
+        credentials={credentials}
+      />
       <RequestHistory
         clearRequestHistory={clearRequestHistory}
         requestHistory={requestHistory}

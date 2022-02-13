@@ -12,7 +12,10 @@ import { Request } from 'store/reducers/consoleReducer'
 import { authWithSession, logout } from 'api/sendsay'
 import { useNavigate } from 'react-router-dom'
 
-import { getAuthResult } from 'store/selectors/loginPage/selector'
+import {
+  getAuthResult,
+  getCredentials,
+} from 'store/selectors/loginPage/selector'
 import { AuthResult } from 'store/reducers/loginReducer'
 import { RootState } from 'store/store'
 import { loginActions } from 'store/actions/login/loginActions'
@@ -31,6 +34,7 @@ const ConsolePageContainer = ({
   auth,
   runRequest,
   setAuthResult,
+  credentials,
   clearRequestHistory,
 }: Props) => {
   const navigate = useNavigate()
@@ -71,6 +75,7 @@ const ConsolePageContainer = ({
         clearRequestHistory={clearRequestHistory}
         auth={auth}
         onLogout={onLogout}
+        credentials={credentials}
         onFullScreen={onFullScreen}
       />
     </FullScreen>
@@ -84,6 +89,7 @@ const connector = connect(
       requestHistory: getRequestHistory(state),
       isRequestError: getIsRequestError(state),
       isResponseError: getIsResponseError(state),
+      credentials: getCredentials(state),
       auth: getAuthResult(state),
     }
   },

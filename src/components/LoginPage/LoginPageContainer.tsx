@@ -17,6 +17,7 @@ const LoginPageContainer = ({
   isLoading,
   authResult,
   signIn,
+  setCredentials,
   setAuthResult,
 }: PropsFromRedux) => {
   const navigate = useNavigate()
@@ -34,6 +35,7 @@ const LoginPageContainer = ({
     form.preventDefault()
     signIn(login, sublogin, password).then((res: any) => {
       if (!res.isError) {
+        setCredentials({ login, sublogin })
         navigate('/console')
       }
     })
@@ -62,7 +64,11 @@ const connector = connect(
       authResult,
     }
   },
-  { signIn, setAuthResult: loginActions.setAuthResultAction }
+  {
+    signIn,
+    setAuthResult: loginActions.setAuthResultAction,
+    setCredentials: loginActions.setCredentials,
+  }
 )
 type PropsFromRedux = ConnectedProps<typeof connector>
 export default connector(LoginPageContainer)

@@ -45,8 +45,7 @@ const Textarea = ({onCurrentRequestTextChange, currentRequest, isRequestError}: 
   return (
     <div className="console__request">
       <div>Запрос</div>
-      {/*<div className={"console__request_input"}*/}
-      {/*     style={{width: width + 'px'}}>*/}
+
       <div ref={wrapperRef} style={{width: width + 'px'}} className={"console__request__textarea_wrapper"}>
     <textarea
       className={`console__request__textarea ${getErrorClass(isRequestError)}`}
@@ -63,7 +62,6 @@ const Textarea = ({onCurrentRequestTextChange, currentRequest, isRequestError}: 
         </div>
       </div>
     </div>
-    // </div>
   )
 }
 
