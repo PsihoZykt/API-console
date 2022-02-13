@@ -38,6 +38,18 @@
 }
 
 .header__exit_maximize {
-    margin-left: 10px;
+    padding: 5px;
+    border: 2px solid transparent;
+
+
 }
 
+.header__exit_maximize:hover {
+    filter: invert(19%) sepia(86%) saturate(4269%) hue-rotate(218deg) brightness(98%) contrast(105%);
+
+}
+.header__exit_maximize:focus {
+    opacity: 0.5;
+    border: 2px solid #45A5FF;
+    border-radius: 7px;
+}

@@ -30,10 +30,11 @@ const Header = ({auth, onLogout, fullScreen, credentials}: PropTypes) => {
           <img src={exit} alt="exit symbol"/>
         </div>
                 <img
-                    onClick={handleFullScreen}
-                    className="header__exit_maximize"
-                    src={fullScreen.active ? minimize: maximize}
-                    alt="maximize icon"
+                  tabIndex={1}
+                  onClick={handleFullScreen}
+                  className="header__exit_maximize"
+                  src={fullScreen.active ? minimize: maximize}
+                  alt="maximize icon"
                 />
             </div>
         </div>
