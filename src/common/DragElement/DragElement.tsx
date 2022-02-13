@@ -79,13 +79,27 @@ export const ExpandElement = ({
         ref={expandedRef}
         className={getExpandedClass()}
       >
-        <div onClick={onRun}>Запустить</div>
-        <div onClick={onCopy}>
+        <div
+          className="expand-element__item expand-element__item-run"
+          onClick={onRun}
+        >
+          Запустить
+        </div>
+        <div
+          className="expand-element__item expand-element__item-copy"
+          onClick={onCopy}
+        >
           <CopyToClipboard text={request.requestText}>
             <span> Скопировать</span>
           </CopyToClipboard>
         </div>
-        <div onClick={onDelete}>Удалить</div>
+        <div className="delimiter"> </div>
+        <div
+          className="expand-element__item expand-element__item-delete"
+          onClick={onDelete}
+        >
+          Удалить
+        </div>
       </div>
     </div>
   )
