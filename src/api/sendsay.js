@@ -9,6 +9,8 @@ const auth = async (login, sublogin, password) => {
       passwd: password,
     })
     localStorage.setItem('sendsay_session', res.session)
+    localStorage.setItem('login', login)
+    if (sublogin) localStorage.setItem('sublogin', sublogin)
     return { isError: false, res }
   } catch (e) {
     return { isError: true, res: e }

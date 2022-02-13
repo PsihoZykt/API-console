@@ -15,8 +15,8 @@ export type LoginState = {
   credentials: Credentials,
 }
 export type Credentials = {
-  login: string,
-  sublogin: string,
+  login: string | null,
+  sublogin: string | null,
 }
 const initialState = {
   authResult: {

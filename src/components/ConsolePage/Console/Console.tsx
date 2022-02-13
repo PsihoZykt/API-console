@@ -23,9 +23,9 @@ const Console = ({isRequestError, isResponseError, onCurrentRequestTextChange, c
             className={'console__response'}
         >
           Ответ
-          <div className={`console__response_field ${getErrorClass(isResponseError)}`}>
-          {JSON.stringify(JSON.parse(currentRequest.requestResponse), null, 2)}
-        </div>
+          <pre className={`console__response_field ${getErrorClass(isResponseError)}`}>
+            {currentRequest.requestResponse}
+        </pre>
         </div>
       </div>
   )

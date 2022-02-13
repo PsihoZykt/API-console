@@ -16,7 +16,7 @@ import {
   getAuthResult,
   getCredentials,
 } from 'store/selectors/loginPage/selector'
-import { AuthResult } from 'store/reducers/loginReducer'
+import { AuthResult, Credentials } from 'store/reducers/loginReducer'
 import { RootState } from 'store/store'
 import { loginActions } from 'store/actions/login/loginActions'
 import { consoleActions } from 'store/actions/console/consoleActions'
@@ -36,13 +36,17 @@ const ConsolePageContainer = ({
   setAuthResult,
   credentials,
   clearRequestHistory,
+  setCredentials,
 }: Props) => {
   const navigate = useNavigate()
   const handle = useFullScreenHandle()
   useEffect(() => {
     if (localStorage.getItem('sendsay_session')) {
+      const login = localStorage.getItem('login')
+      const sublogin = localStorage.getItem('sublogin')
       authWithSession().then((res) => {
         setAuthResult(res)
+        setCredentials({ login, sublogin })
       })
     } else {
       navigate('/')
@@ -53,13 +57,17 @@ const ConsolePageContainer = ({
   }
   const onLogout = () => {
     localStorage.removeItem('sendsay_session')
+    localStorage.removeItem('login')
+    localStorage.removeItem('sublogin')
     logout().then((res) => {
       navigate('/')
     })
   }
+  const onFormatting = (body: string) => {
+    changeRequestBody(JSON.stringify(JSON.parse(body), null, '\t'))
+  }
 
   const onSubmitRequest = async (body: string) => {
-    console.log(body)
     await runRequest(body)
   }
 
@@ -77,6 +85,7 @@ const ConsolePageContainer = ({
         onLogout={onLogout}
         credentials={credentials}
         onFullScreen={onFullScreen}
+        onFormatting={onFormatting}
       />
     </FullScreen>
   )
@@ -100,6 +109,8 @@ const connector = connect(
     setAuthResult: (authResult: AuthResult) =>
       loginActions.setAuthResultAction(authResult),
     clearRequestHistory: () => consoleActions.clearRequestHistory(),
+    setCredentials: (credentials: Credentials) =>
+      loginActions.setCredentials(credentials),
     runRequest,
   }
 )

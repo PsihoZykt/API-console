@@ -32,7 +32,8 @@ export const runRequest =
 
       const id = randomID()
       const requestText = body
-      const requestResponse = JSON.stringify(response)
+      const requestResponse = JSON.stringify(response, null, 4)
+
       const newRequest = { status, id, requestText, requestResponse }
       dispatch(consoleActions.setIsResponseError(!isSuccessful))
       dispatch(consoleActions.changeCurrentRequest(newRequest))
