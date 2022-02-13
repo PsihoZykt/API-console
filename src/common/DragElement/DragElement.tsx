@@ -32,15 +32,16 @@ export const ExpandElement = ({
 }: PropsType) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const expandElementRef = useRef<HTMLDivElement>(null)
+  const [fade, setFade] = useState(false)
   const onDocumentClick = (e: MouseEvent) => {
     if (expandElementRef.current !== e.target) {
       setIsExpanded(false)
     }
   }
   useEffect(() => {
-    document.addEventListener('click', onDocumentClick)
+    // document.addEventListener('click', onDocumentClick)
     return () => {
-      document.removeEventListener('click', onDocumentClick)
+      // document.removeEventListener('click', onDocumentClick)
     }
   }, [])
 
@@ -57,7 +58,7 @@ export const ExpandElement = ({
   }
   const onCopy = () => {
     onCopyRequest(request)
-    setIsExpanded(false)
+    // setIsExpanded(false)
   }
   const getExpandedClass = () => {
     return isExpanded ? 'expand-expanded' : 'expand-hidden'
@@ -86,14 +87,29 @@ export const ExpandElement = ({
           Запустить
         </div>
         <div
-          className="expand-element__item expand-element__item-copy"
-          onClick={onCopy}
+          className={`expand-element__item expand-element__item-copy `}
+          onClick={() => {
+            setFade(true)
+            console.log(fade)
+            onCopy()
+          }}
         >
           <CopyToClipboard text={request.requestText}>
-            <span> {} Скопировать</span>
+            <span>
+              <div
+                onAnimationEnd={() => {
+                  console.log('end')
+                  setFade(false)
+                }}
+                className={`copyEvent ${fade ? 'fade' : ''}`}
+              >
+                Скопировано
+              </div>
+              Скопировать
+            </span>
           </CopyToClipboard>
         </div>
-        <div className="delimiter"> </div>
+        <div className="delimiter"></div>
         <div
           className="expand-element__item expand-element__item-delete"
           onClick={onDelete}
