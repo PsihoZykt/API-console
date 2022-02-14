@@ -25,7 +25,9 @@ const LoginForm: React.FC<ReduxFormPropsType> =
          authResult,
          isLoading,
       valid
-     }) => (
+     }) => {
+  console.log(authResult)
+  return(
         <form onSubmit={(e) => handleSubmit(e)} className="login-form">
             <div className="login-form__header">API-консолька</div>
             {authResult.isError && <FormError error={authResult.res}/>}
@@ -50,7 +52,7 @@ const LoginForm: React.FC<ReduxFormPropsType> =
                 {isLoading ? <Loader/> : 'Войти'}
             </button>
         </form>
-)
+)}
 export default reduxForm<LoginProps, PropsType>({
     form: 'login',
     validate,

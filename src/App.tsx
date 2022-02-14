@@ -4,10 +4,10 @@ import { connect, ConnectedProps } from 'react-redux'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import { RootState } from './store/store'
 import LoginPage from './components/LoginPage/LoginPageContainer'
-import ConsolePage from './components/ConsolePage/ConsolePageContainer'
 import 'normalize.css'
 import { getAuthResult } from 'store/selectors/loginPage/selector'
 import { signInWithSession } from 'store/thunks/loginThunks'
+import ConsolePage from 'components/ConsolePage/ConsolePage'
 
 type ReduxProps = ConnectedProps<typeof connector>
 const App: React.FC<ReduxProps> = ({ authResult, signInWithSession }) => {
