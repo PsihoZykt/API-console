@@ -39,7 +39,7 @@ const Header = ({ fullScreen, credentials }: PropsType) => {
           {credentials.login}
           {credentials.sublogin && `:${credentials.sublogin}`}
         </div>
-        <div onClick={() => onLogout()} className="header__exit">
+        <div tabIndex={0} onClick={() => onLogout()} className="header__exit">
           <div>Выйти</div>
           <img src={exit} alt="exit symbol" />
         </div>

@@ -33,6 +33,7 @@ const RequestHistoryItem = ({
   const requestAction = JSON.parse(request.requestText).action
   return (
     <div
+      tabIndex={0}
       onClickCapture={(e) => {
         setLeftOffset(e.currentTarget.offsetLeft + 55)
         onHistoryItemClick(request)

@@ -59,6 +59,7 @@ const ItemMenu = ({
       <div
         ref={expandElementRef}
         className="expand__icon"
+        tabIndex={0}
       >
         <DragElement/>
         <div
@@ -71,6 +72,8 @@ const ItemMenu = ({
           <div
             className="expand__item run"
             onClick={onRun}
+            tabIndex={0}
+
           >
             Запустить
           </div>
@@ -80,6 +83,8 @@ const ItemMenu = ({
               setFade(true)
 
             }}
+            tabIndex={0}
+
             ref={copyElement}
 
           >
@@ -88,6 +93,8 @@ const ItemMenu = ({
                 setFade(false)
               }}
               className={`copyEvent ${fade ? 'fade' : ''}`}
+              tabIndex={0}
+
             >
               Скопировано
             </div>
@@ -99,6 +106,8 @@ const ItemMenu = ({
           <div
             className="expand__item delete"
             onClick={onDelete}
+            tabIndex={0}
+
           >
             Удалить
           </div>

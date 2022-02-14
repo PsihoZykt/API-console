@@ -49,6 +49,7 @@ const RequestHistory = ({ requestHistory, clearRequestHistory }: PropsType) => {
       <div
         className={`history__clear ${scroll ? 'scrolling' : ''}`}
         onClick={() => onClearRequestHistory()}
+        tabIndex={0}
       >
         <img src={clear} alt="X symbol" />
       </div>
