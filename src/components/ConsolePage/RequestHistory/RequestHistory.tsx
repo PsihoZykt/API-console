@@ -3,11 +3,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import RequestHistoryItem from 'components/ConsolePage/RequestHistory/RequestHistoryItem/RequestHistoryItemContainer'
 import './RequestHistory.css'
 import clear from 'assets/img/consolePage/clear.svg'
-type PropTypes = {
-  requestHistory: Array<Request>,
-  clearRequestHistory: () => void,
-}
-const RequestHistory = ({ requestHistory, clearRequestHistory }: PropTypes) => {
+import { connect, ConnectedProps } from 'react-redux'
+import { RootState } from 'store/store'
+import { getRequestHistory } from 'store/selectors/consolePage/selector'
+import { consoleActions } from 'store/actions/console/consoleActions'
+
+type ReduxProps = ConnectedProps<typeof connector>
+type PropsType = ReduxProps
+const RequestHistory = ({ requestHistory, clearRequestHistory }: PropsType) => {
   const elRef = useRef<HTMLDivElement>(null)
   const [scroll, setScroll] = useState(false)
   useEffect(() => {
@@ -45,11 +48,19 @@ const RequestHistory = ({ requestHistory, clearRequestHistory }: PropTypes) => {
       </div>
       <div
         className={`history__clear ${scroll ? 'scrolling' : ''}`}
-        onClick={clearRequestHistory}
+        onClick={() => onClearRequestHistory()}
       >
         <img src={clear} alt="X symbol" />
       </div>
     </div>
   )
 }
-export default RequestHistory
+const connector = connect(
+  (state: RootState) => {
+    return {
+      requestHistory: getRequestHistory(state),
+    }
+  },
+  { clearRequestHistory: consoleActions.clearRequestHistory }
+)
+export default connector(RequestHistory)

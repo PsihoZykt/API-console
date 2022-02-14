@@ -1,14 +1,27 @@
-import GithubLink from "common/GithubLink/GithubLink";
-import format from "assets/img/consolePage/format.svg";
-import React, {useEffect} from "react";
-import {Request} from "store/reducers/consoleReducer";
+import GithubLink from 'common/GithubLink/GithubLink'
+import format from 'assets/img/consolePage/format.svg'
+import React from 'react'
 import './Footer.css'
-type PropsType = {
-    onSubmitRequest: (requestText: string) => void
-    currentRequest: Request
-  onFormatting: (body: string) => void
-}
-const Footer = ({onSubmitRequest, currentRequest, onFormatting}: PropsType) => {
+import { connect, ConnectedProps } from 'react-redux'
+import { RootState } from 'store/store'
+import { getCurrentRequest } from 'store/selectors/consolePage/selector'
+import { consoleActions } from 'store/actions/console/consoleActions'
+import { runRequest } from 'store/thunks/consoleThunks'
+
+type ReduxProps = ConnectedProps<typeof connector>
+type PropsType = ReduxProps
+const Footer = ({
+  changeRequestBody,
+  currentRequest,
+  runRequest,
+}: PropsType) => {
+  const onFormatting = (body: string) => {
+    changeRequestBody(JSON.stringify(JSON.parse(body), null, '\t'))
+  }
+
+  const onSubmitRequest = async (body: string) => {
+    runRequest(body)
+  }
 
   return (
     <div className="footer">
@@ -18,12 +31,25 @@ const Footer = ({onSubmitRequest, currentRequest, onFormatting}: PropsType) => {
       >
         Отправить
       </button>
-      <GithubLink/>
+      <GithubLink />
       <div className="footer_format">
-        <img src={format} alt="some rectangles with different width"/>
-        <div onClick={() => onFormatting(currentRequest.requestText)}> Форматировать</div>
+        <img src={format} alt="some rectangles with different width" />
+        <div onClick={() => onFormatting(currentRequest.requestText)}>
+          Форматировать
+        </div>
       </div>
     </div>
   )
 }
-export default Footer
+const connector = connect(
+  (state: RootState) => {
+    return {
+      currentRequest: getCurrentRequest(state),
+    }
+  },
+  {
+    changeRequestBody: consoleActions.changeRequestText,
+    runRequest: runRequest,
+  }
+)
+export default connector(Footer)

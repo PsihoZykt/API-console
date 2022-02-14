@@ -8,7 +8,6 @@ import { signIn } from 'store/thunks/loginThunks'
 import { getAuthResult, getIsLoading } from 'store/selectors/loginPage/selector'
 import { authWithSession } from 'api/sendsay'
 import { RootState } from 'store/store'
-import { loginActions } from 'store/actions/login/loginActions'
 
 const LoginPageContainer = ({
   login,
@@ -17,27 +16,22 @@ const LoginPageContainer = ({
   isLoading,
   authResult,
   signIn,
-  setCredentials,
-  setAuthResult,
 }: PropsFromRedux) => {
   const navigate = useNavigate()
-  console.log(authResult)
   useEffect(() => {
-    if (localStorage.getItem('sendsay_session')) {
-      authWithSession().then((res) => {
-        setAuthResult(res)
+    authWithSession().then((res) => {
+      if (!res.isError) {
         navigate('/console')
-      })
-    }
+      } else navigate('/')
+    })
   }, [])
 
   const submit = (form: FormEvent<HTMLFormElement>) => {
     form.preventDefault()
-    signIn(login, sublogin, password).then((res: any) => {
+    signIn(login, sublogin, password).then((res) => {
       if (!res.isError) {
-        setCredentials({ login, sublogin })
-        navigate('/console')
-      }
+        navigate('console')
+      } else navigate('/')
     })
   }
 
@@ -66,8 +60,6 @@ const connector = connect(
   },
   {
     signIn,
-    setAuthResult: loginActions.setAuthResultAction,
-    setCredentials: loginActions.setCredentials,
   }
 )
 type PropsFromRedux = ConnectedProps<typeof connector>

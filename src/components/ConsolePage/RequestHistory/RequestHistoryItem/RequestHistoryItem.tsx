@@ -1,18 +1,15 @@
 import {Request, RequestStatus} from 'store/reducers/consoleReducer'
 import './RequestHistoryItem.css'
 import React, {useEffect, useRef, useState} from 'react'
-import {ExpandElement} from "common/DragElement/DragElement";
+import ItemMenu from "components/ConsolePage/RequestHistory/RequestHistoryItem/ItemMenu/ItemMenu";
 
 type PropTypes = {
-  onDeleteRequest: (request: Request) => void,
-  onCopyRequest: (request: Request) => void,
-  onRunRequest: (request: Request) => void,
   onHistoryItemClick: (request: Request) => void
   request: Request,
 }
 
 const RequestHistoryItem =
-  ({request, onRunRequest, onHistoryItemClick, onDeleteRequest, onCopyRequest}: PropTypes) => {
+  ({request,  onHistoryItemClick}: PropTypes) => {
     const statusClass = request.status === RequestStatus.Successful
       ? 'status_successful' : 'status_unsuccessful'
     const ref = useRef<HTMLDivElement>(null)
@@ -32,11 +29,8 @@ const RequestHistoryItem =
         <div className={statusClass}/>
         <div>{JSON.parse(request.requestText).action}</div>
 
-        <ExpandElement
-          onCopyRequest={onCopyRequest}
-          onRunRequest={onRunRequest}
+        <ItemMenu
           request={request}
-          onDeleteRequest={onDeleteRequest}
           leftOffset={leftOffset}
         />
       </div>

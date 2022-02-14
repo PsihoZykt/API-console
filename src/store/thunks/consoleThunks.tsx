@@ -7,11 +7,13 @@ import {
   consoleActions,
   ConsoleActionsType,
 } from 'store/actions/console/consoleActions'
+import { useNavigate } from 'react-router-dom'
 
 export const runRequest =
   (body: string): ThunkAction<void, RootState, unknown, ConsoleActionsType> =>
   async (dispatch) => {
     let request
+    const navigator = useNavigate()
     console.log('das')
 
     try {
@@ -35,6 +37,7 @@ export const runRequest =
       const requestResponse = JSON.stringify(response, null, 4)
 
       const newRequest = { status, id, requestText, requestResponse }
+      console.log(newRequest)
       dispatch(consoleActions.setIsResponseError(!isSuccessful))
       dispatch(consoleActions.changeCurrentRequest(newRequest))
       dispatch(consoleActions.addRequestToHistory(newRequest))

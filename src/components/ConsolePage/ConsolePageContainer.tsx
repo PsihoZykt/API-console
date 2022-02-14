@@ -1,123 +1,30 @@
 import React, { useEffect } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import ConsolePage from './ConsolePage'
-
-import {
-  getCurrentRequest,
-  getIsRequestError,
-  getIsResponseError,
-  getRequestConsoleWIdth,
-  getRequestHistory,
-} from 'store/selectors/consolePage/selector'
-import { Request } from 'store/reducers/consoleReducer'
-import { authWithSession, logout } from 'api/sendsay'
 import { useNavigate } from 'react-router-dom'
-
-import {
-  getAuthResult,
-  getCredentials,
-} from 'store/selectors/loginPage/selector'
-import { AuthResult, Credentials } from 'store/reducers/loginReducer'
-import { RootState } from 'store/store'
-import { loginActions } from 'store/actions/login/loginActions'
-import { consoleActions } from 'store/actions/console/consoleActions'
-import { runRequest } from 'store/thunks/consoleThunks'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
+import { signInWithSession } from 'store/thunks/loginThunks'
 
 type Props = ReduxProps
 
-const ConsolePageContainer = ({
-  currentRequest,
-  isResponseError,
-  isRequestError,
-  changeRequestBody,
-  requestHistory,
-  auth,
-  runRequest,
-  setAuthResult,
-  credentials,
-  clearRequestHistory,
-  setCredentials,
-  setRequestConsoleWidth,
-  requestConsoleWidth,
-}: Props) => {
+const ConsolePageContainer = ({ signInWithSession }: Props) => {
   const navigate = useNavigate()
   const fullScreen = useFullScreenHandle()
   useEffect(() => {
-    if (localStorage.getItem('sendsay_session')) {
-      const login = localStorage.getItem('login')
-      const sublogin = localStorage.getItem('sublogin')
-      authWithSession().then((res) => {
-        setAuthResult(res)
-        setCredentials({ login, sublogin })
-      })
-    } else {
-      navigate('/')
-    }
-  }, [])
-  const onLogout = () => {
-    localStorage.removeItem('sendsay_session')
-    localStorage.removeItem('login')
-    localStorage.removeItem('sublogin')
-    logout().then((res) => {
-      navigate('/')
+    signInWithSession().then((res) => {
+      if (res.isError) navigate('/')
     })
-  }
-  const onFormatting = (body: string) => {
-    changeRequestBody(JSON.stringify(JSON.parse(body), null, '\t'))
-  }
-
-  const onSubmitRequest = async (body: string) => {
-    await runRequest(body)
-  }
+  }, [])
 
   return (
     <FullScreen handle={fullScreen}>
-      <ConsolePage
-        onSubmitRequest={onSubmitRequest}
-        currentRequest={currentRequest}
-        changeRequestBody={changeRequestBody}
-        requestHistory={requestHistory}
-        isRequestError={isRequestError}
-        isResponseError={isResponseError}
-        clearRequestHistory={clearRequestHistory}
-        auth={auth}
-        onLogout={onLogout}
-        credentials={credentials}
-        fullScreen={fullScreen}
-        onFormatting={onFormatting}
-        setRequestConsoleWidth={setRequestConsoleWidth}
-        requestConsoleWidth={requestConsoleWidth}
-      />
+      <ConsolePage fullScreen={fullScreen} />
     </FullScreen>
   )
 }
 
-const connector = connect(
-  (state: RootState) => {
-    return {
-      currentRequest: getCurrentRequest(state),
-      requestHistory: getRequestHistory(state),
-      isRequestError: getIsRequestError(state),
-      isResponseError: getIsResponseError(state),
-      credentials: getCredentials(state),
-      requestConsoleWidth: getRequestConsoleWIdth(state),
-      auth: getAuthResult(state),
-    }
-  },
-  {
-    changeRequestBody: (body: string) => consoleActions.changeRequestText(body),
-    changeCurrentRequest: (request: Request) =>
-      consoleActions.changeCurrentRequest(request),
-    setAuthResult: (authResult: AuthResult) =>
-      loginActions.setAuthResultAction(authResult),
-    clearRequestHistory: () => consoleActions.clearRequestHistory(),
-    setCredentials: (credentials: Credentials) =>
-      loginActions.setCredentials(credentials),
-    setRequestConsoleWidth: (width: number) =>
-      consoleActions.setRequestConsoleWidth(width),
-    runRequest,
-  }
-)
+const connector = connect(null, {
+  signInWithSession: signInWithSession,
+})
 type ReduxProps = ConnectedProps<typeof connector>
 export default connector(ConsolePageContainer)
