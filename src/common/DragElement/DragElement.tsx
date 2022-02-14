@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import './DragElement.css'
-import { Request } from 'store/reducers/consoleReducer'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
+import {Request} from 'store/reducers/consoleReducer'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
+import exp from 'constants'
 
 export class DragElement<T, S> extends React.Component<T, S> {
   render() {
     return (
       <div className={`drag-element`}>
-        <div className="drag-element_circle" />
-        <div className="drag-element_circle" />
-        <div className="drag-element_circle" />
+        <div className="drag-element_circle"/>
+        <div className="drag-element_circle"/>
+        <div className="drag-element_circle"/>
       </div>
     )
   }
@@ -32,34 +33,38 @@ export const ExpandElement = ({
 }: PropsType) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const expandElementRef = useRef<HTMLDivElement>(null)
+  const copyElement = useRef<HTMLDivElement>(null)
   const [fade, setFade] = useState(false)
   const onDocumentClick = (e: MouseEvent) => {
-    if (expandElementRef.current !== e.target) {
-      setIsExpanded(false)
+    const target = e.target as HTMLDivElement
+    // If we click on "copy" button, menu remains expanded
+    if (copyElement.current && copyElement.current.contains(target)) {
+      setIsExpanded(true)
+    } else {
+      //If we click on 3 dots icon, open menu, otherwise close it
+      setIsExpanded(expandElementRef.current && expandElementRef.current === e.target || false)
     }
+
   }
+
   useEffect(() => {
-    // document.addEventListener('click', onDocumentClick)
+    document.addEventListener('click', onDocumentClick)
     return () => {
-      // document.removeEventListener('click', onDocumentClick)
+      document.removeEventListener('click', onDocumentClick)
     }
   }, [])
 
-  const onExpand = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsExpanded(true)
-  }
+
   const onRun = () => {
     onRunRequest(request)
-    setIsExpanded(false)
   }
   const onDelete = () => {
     onDeleteRequest(request)
-    setIsExpanded(false)
   }
   const onCopy = () => {
     onCopyRequest(request)
-    // setIsExpanded(false)
   }
+
   const getExpandedClass = () => {
     return isExpanded ? 'expand-expanded' : 'expand-hidden'
   }
@@ -67,56 +72,54 @@ export const ExpandElement = ({
   return (
     <div className="expand">
       <div
-        onClick={(e) => onExpand(e)}
         ref={expandElementRef}
         className="expand-element"
       >
-        <DragElement />
-      </div>
-      <div
-        style={{
-          left: leftOffset - 80,
-        }}
-        ref={expandedRef}
-        className={getExpandedClass()}
-      >
+        <DragElement/>
         <div
-          className="expand-element__item expand-element__item-run"
-          onClick={onRun}
-        >
-          Запустить
-        </div>
-        <div
-          className={`expand-element__item expand-element__item-copy `}
-          onClick={() => {
-            setFade(true)
-            console.log(fade)
-            onCopy()
+          style={{
+            left: leftOffset - 80,
           }}
+          ref={expandedRef}
+          className={`expand ${getExpandedClass()}`}
         >
-          <CopyToClipboard text={request.requestText}>
-            <span>
-              <div
-                onAnimationEnd={() => {
-                  console.log('end')
-                  setFade(false)
-                }}
-                className={`copyEvent ${fade ? 'fade' : ''}`}
-              >
-                Скопировано
-              </div>
-              Скопировать
-            </span>
-          </CopyToClipboard>
-        </div>
-        <div className="delimiter"></div>
-        <div
-          className="expand-element__item expand-element__item-delete"
-          onClick={onDelete}
-        >
-          Удалить
+          <div
+            className="expand-element__item expand-element__item-run"
+            onClick={onRun}
+          >
+            Запустить
+          </div>
+          <div
+            className={`expand-element__item expand-element__item-copy `}
+            onClick={() => {
+              setFade(true)
+              onCopy()
+            }}
+            ref={copyElement}
+
+          >
+            <div
+              onAnimationEnd={() => {
+                setFade(false)
+              }}
+              className={`copyEvent ${fade ? 'fade' : ''}`}
+            >
+              Скопировано
+            </div>
+            <CopyToClipboard text={request.requestText}>
+              <div>Скопировать</div>
+            </CopyToClipboard>
+          </div>
+          <div className="delimiter"></div>
+          <div
+            className="expand-element__item expand-element__item-delete"
+            onClick={onDelete}
+          >
+            Удалить
+          </div>
         </div>
       </div>
+
     </div>
   )
 }

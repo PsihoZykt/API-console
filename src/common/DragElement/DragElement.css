@@ -23,7 +23,7 @@
     /*border: 1px solid red;*/
 }
 .expand-expanded {
-    position: absolute;
+    position: fixed;
     /*width: 100px;*/
     display: flex;
     flex-flow: column nowrap;
@@ -52,14 +52,14 @@
     padding: 10px 15px;
 }
 
-.drag-element-clickable {
-    position: absolute;
-    right: -15px;
-    top: -10px;
-    /*display: none;*/
-    width: 25px;
-    height: 35px;
-}
+/*.drag-element-clickable {*/
+/*    position: absolute;*/
+/*    right: -15px;*/
+/*    top: -10px;*/
+/*    !*display: none;*!*/
+/*    width: 25px;*/
+/*    height: 35px;*/
+/*}*/
 
 .expand-hidden {
     display: none;
@@ -79,6 +79,8 @@
 .copyEvent {
     visibility: hidden;
     position: absolute;
+    left:0;
+    top: -10px;
     background: #F6F6F6;
     border-radius: 5px;
 
@@ -95,19 +97,19 @@
 
 @keyframes wobble {
     25% {
-        transform: translateY(25%);
+        transform: translateY(-25%);
     }
     50% {
         color: green;
-        transform: translateY(50%);
+        transform: translateY(-50%);
     }
     75% {
         color: red;
-        transform: translateY(75%);
+        transform: translateY(-75%);
     }
     100% {
         color: green;
-        transform: translateY(100%);
+        transform: translateY(-100%);
 
     }
 }

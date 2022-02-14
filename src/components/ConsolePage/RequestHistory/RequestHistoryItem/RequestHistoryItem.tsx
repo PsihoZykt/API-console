@@ -23,7 +23,7 @@ const RequestHistoryItem =
     return (
       <div
         onClickCapture={(e) => {
-          setLeftOffset(e.clientX)
+          setLeftOffset(e.currentTarget.offsetLeft + 55)
           onHistoryItemClick(request)
         }}
         className="history__item"
@@ -31,6 +31,7 @@ const RequestHistoryItem =
       >
         <div className={statusClass}/>
         <div>{JSON.parse(request.requestText).action}</div>
+
         <ExpandElement
           onCopyRequest={onCopyRequest}
           onRunRequest={onRunRequest}
