@@ -3,6 +3,7 @@ import RequestHistoryItem from 'components/ConsolePage/RequestHistory/RequestHis
 import { connect, ConnectedProps } from 'react-redux'
 import { consoleActions } from 'store/actions/console/consoleActions'
 import { Request } from 'store/reducers/consoleReducer'
+import { getFormattedJSON } from 'helpers/json/format'
 
 type OwnPropsType = {
   request: Request,
@@ -17,7 +18,7 @@ const RequestHistoryItemContainer = ({
   // I Supposed, when you click to request, response-window should be cleared
   // Because, even if request body is former, response can be different
   const onHistoryItemClick = (request: Request) => {
-    changeCurrentRequestText(request.requestText)
+    changeCurrentRequestText(getFormattedJSON(request.requestText))
     changeRequestResponse('{}')
   }
 

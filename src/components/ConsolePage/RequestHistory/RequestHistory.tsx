@@ -16,7 +16,7 @@ const RequestHistory = ({ requestHistory, clearRequestHistory }: PropsType) => {
   useEffect(() => {
     const el = elRef.current
     if (el) {
-      const onWheel = (e: any) => {
+      const onWheel = (e: WheelEvent) => {
         setScroll(true)
 
         if (e.deltaY == 0) return

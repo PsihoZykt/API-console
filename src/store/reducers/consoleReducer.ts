@@ -201,10 +201,10 @@ const addRequestToHistory = (
   const newRequestHistory = [...state.requestHistory]
 
   let uniqRequestHistoryItemIndex = 0
+  const parsedActionText = JSON.parse(action.payload.requestText)
+
   const uniqRequestHistoryItem = newRequestHistory.find((request, index) => {
     const parsedRequestText = JSON.parse(request.requestText)
-    const parsedActionText = JSON.parse(action.payload.requestText)
-    //TODO: What if actions is undefined?
     if (parsedRequestText.action === parsedActionText.action) {
       uniqRequestHistoryItemIndex = index
       return request
@@ -216,12 +216,12 @@ const addRequestToHistory = (
       0,
       newRequestHistory.splice(uniqRequestHistoryItemIndex, 1)[0]
     )
-  } else {
+  }
+  if (newRequestHistory.length < 15 && parsedActionText.action) {
     newRequestHistory.push(action.payload)
   }
-
-  if (newRequestHistory.length > 15) {
-    newRequestHistory.pop()
+  if (newRequestHistory.length >= 15 && parsedActionText.action) {
+    newRequestHistory.shift()
   }
 
   return {

@@ -7,6 +7,7 @@ import {
 
 export type AuthResult = {
   isError: boolean,
+  credentials?: Credentials,
   res: any,
 }
 export type LoginState = {

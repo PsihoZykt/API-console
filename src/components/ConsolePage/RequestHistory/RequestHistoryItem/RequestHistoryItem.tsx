@@ -1,6 +1,6 @@
 import {Request, RequestStatus} from 'store/reducers/consoleReducer'
 import './RequestHistoryItem.css'
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useRef, useState} from 'react'
 import ItemMenu from "components/ConsolePage/RequestHistory/RequestHistoryItem/ItemMenu/ItemMenu";
 
 type PropTypes = {
@@ -14,9 +14,7 @@ const RequestHistoryItem =
       ? 'status_successful' : 'status_unsuccessful'
     const ref = useRef<HTMLDivElement>(null)
     const [leftOffset, setLeftOffset] = useState<number>(0)
-    useEffect(() => {
-      ref.current?.addEventListener("click", () => console.log("item"))
-    }, [])
+    const requestAction = JSON.parse(request.requestText).action
     return (
       <div
         onClickCapture={(e) => {
@@ -27,7 +25,7 @@ const RequestHistoryItem =
         ref={ref}
       >
         <div className={statusClass}/>
-        <div>{JSON.parse(request.requestText).action}</div>
+        <div>{requestAction}</div>
 
         <ItemMenu
           request={request}

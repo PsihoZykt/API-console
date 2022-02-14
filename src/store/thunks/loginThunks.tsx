@@ -15,7 +15,6 @@ export const signIn =
     password: string
   ): ThunkAction<Promise<AuthResult>, RootState, unknown, LoginActionsType> =>
   async (dispatch) => {
-    console.log('SignIn')
     dispatch(loginActions.setIsLoadingAction(true))
     const response = await auth(login, sublogin, password)
     dispatch(loginActions.setAuthResultAction(response))
@@ -26,10 +25,8 @@ export const signIn =
 export const signInWithSession =
   (): ThunkAction<Promise<AuthResult>, RootState, unknown, LoginActionsType> =>
   async (dispatch) => {
-    console.log('das')
     const response = await authWithSession()
     dispatch(loginActions.setAuthResultAction(response))
-    console.log('thung', response)
     if (!response.isError && response.credentials) {
       dispatch(
         loginActions.setCredentials({

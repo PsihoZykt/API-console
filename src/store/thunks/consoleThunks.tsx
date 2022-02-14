@@ -13,21 +13,16 @@ export const runRequest =
   (body: string): ThunkAction<void, RootState, unknown, ConsoleActionsType> =>
   async (dispatch) => {
     let request
-    const navigator = useNavigate()
-    console.log('das')
-
     try {
       request = JSON.parse(body)
-      console.log(request)
       dispatch(consoleActions.setIsRequestError(false))
     } catch (e) {
-      console.log('Parse error')
       dispatch(consoleActions.setIsRequestError(true))
     }
     if (request) {
       const response = await makeRequest(body)
       // Sendsay returns _ehid only with successful request, so we can use it
-      const isSuccessful = !!(response._ehid ?? false)
+      const isSuccessful = !!(response.res._ehid ?? false)
       const status = isSuccessful
         ? RequestStatus.Successful
         : RequestStatus.Unsuccessful
@@ -37,7 +32,6 @@ export const runRequest =
       const requestResponse = JSON.stringify(response, null, 4)
 
       const newRequest = { status, id, requestText, requestResponse }
-      console.log(newRequest)
       dispatch(consoleActions.setIsResponseError(!isSuccessful))
       dispatch(consoleActions.changeCurrentRequest(newRequest))
       dispatch(consoleActions.addRequestToHistory(newRequest))

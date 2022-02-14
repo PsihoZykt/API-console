@@ -9,9 +9,11 @@ import { RootState } from 'store/store'
 import { getCredentials } from 'store/selectors/loginPage/selector'
 import { useNavigate } from 'react-router-dom'
 import { logout } from 'api/sendsay'
+import { FullScreenHandle } from 'react-full-screen'
+import { AuthResult } from 'store/reducers/loginReducer'
 
 type OwnProps = {
-  fullScreen: any,
+  fullScreen: FullScreenHandle,
 }
 type ReduxProps = ConnectedProps<typeof connector>
 type PropsType = ReduxProps & OwnProps
@@ -22,11 +24,7 @@ const Header = ({ fullScreen, credentials }: PropsType) => {
   const navigate = useNavigate()
 
   const onLogout = () => {
-    localStorage.removeItem('sendsay_session')
-    localStorage.removeItem('login')
-    localStorage.removeItem('sublogin')
-    logout().then((res: any) => {
-      console.log('das')
+    logout().then(() => {
       navigate('/')
     })
   }

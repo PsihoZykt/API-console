@@ -1,14 +1,13 @@
-import React, { ChangeEvent } from 'react'
-import { Request } from 'store/reducers/consoleReducer'
+import React from 'react'
 import './ConsolePage.css'
-import { AuthResult, Credentials } from 'store/reducers/loginReducer'
 import Footer from 'components/ConsolePage/Footer/Footer'
 import RequestHistory from 'components/ConsolePage/RequestHistory/RequestHistory'
 import Console from 'components/ConsolePage/Console/Console'
 import Header from 'components/ConsolePage/Header/Header'
+import { FullScreenHandle } from 'react-full-screen'
 
 type PropsType = {
-  fullScreen: any,
+  fullScreen: FullScreenHandle,
 }
 const ConsolePage = ({ fullScreen }: PropsType) => {
   return (

@@ -38,11 +38,9 @@ const makeRequest = async (body) => {
       ...request,
       session: localStorage.getItem('sendsay_session'),
     })
-    console.log(res)
-    return res
+    return { isError: false, res }
   } catch (e) {
-    console.log(e)
-    return e
+    return { isError: true, res: e }
   }
 }
 const logout = async () => {
@@ -51,6 +49,9 @@ const logout = async () => {
     const res = await sendsay.request({
       action: 'logout',
     })
+    localStorage.removeItem('sendsay_session')
+    localStorage.removeItem('login')
+    localStorage.removeItem('sublogin')
     return { isError: false, res }
   } catch (e) {
     return { isError: true, res: e }
@@ -63,7 +64,5 @@ const test = async () => {
     action: 'sys.settings.get',
     session: localStorage.getItem('sendsay_session'),
   })
-
-  console.log(res)
 }
 export { auth, test, makeRequest, authWithSession, logout }

@@ -7,6 +7,7 @@ import { RootState } from 'store/store'
 import { getCurrentRequest } from 'store/selectors/consolePage/selector'
 import { consoleActions } from 'store/actions/console/consoleActions'
 import { runRequest } from 'store/thunks/consoleThunks'
+import { getFormattedJSON } from 'helpers/json/format'
 
 type ReduxProps = ConnectedProps<typeof connector>
 type PropsType = ReduxProps
@@ -16,7 +17,7 @@ const Footer = ({
   runRequest,
 }: PropsType) => {
   const onFormatting = (body: string) => {
-    changeRequestBody(JSON.stringify(JSON.parse(body), null, '\t'))
+    changeRequestBody(getFormattedJSON(body))
   }
 
   const onSubmitRequest = async (body: string) => {
