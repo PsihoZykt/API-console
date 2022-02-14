@@ -4,17 +4,15 @@ import ConsolePage from './ConsolePage'
 import { useNavigate } from 'react-router-dom'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { signInWithSession } from 'store/thunks/loginThunks'
+import { RootState } from 'store/store'
+import { loginActions } from 'store/actions/login/loginActions'
+import { getAuthResult } from 'store/selectors/loginPage/selector'
 
 type Props = ReduxProps
 
-const ConsolePageContainer = ({ signInWithSession }: Props) => {
+const ConsolePageContainer = ({ signInWithSession, authResult }: Props) => {
   const navigate = useNavigate()
   const fullScreen = useFullScreenHandle()
-  useEffect(() => {
-    signInWithSession().then((res) => {
-      if (res.isError) navigate('/')
-    })
-  }, [])
 
   return (
     <FullScreen handle={fullScreen}>
@@ -23,8 +21,15 @@ const ConsolePageContainer = ({ signInWithSession }: Props) => {
   )
 }
 
-const connector = connect(null, {
-  signInWithSession: signInWithSession,
-})
+const connector = connect(
+  (state: RootState) => {
+    return {
+      authResult: getAuthResult(state),
+    }
+  },
+  {
+    signInWithSession: signInWithSession,
+  }
+)
 type ReduxProps = ConnectedProps<typeof connector>
 export default connector(ConsolePageContainer)

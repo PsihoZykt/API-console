@@ -12,17 +12,17 @@ export const signIn =
     login: string,
     sublogin: string,
     password: string
-  ): ThunkAction<Promise<AuthResult>, RootState, unknown, LoginActionsType> =>
+  ): ThunkAction<Promise<void>, RootState, unknown, LoginActionsType> =>
   async (dispatch) => {
     dispatch(loginActions.setIsLoadingAction(true))
     const response = await auth(login, sublogin, password)
+    dispatch(loginActions.setCredentials({ login, sublogin }))
     dispatch(loginActions.setAuthResultAction(response))
     dispatch(loginActions.setIsLoadingAction(false))
-    return response
   }
 
 export const signInWithSession =
-  (): ThunkAction<Promise<AuthResult>, RootState, unknown, LoginActionsType> =>
+  (): ThunkAction<Promise<void>, RootState, unknown, LoginActionsType> =>
   async (dispatch) => {
     const response = await authWithSession()
     dispatch(loginActions.setAuthResultAction(response))
@@ -34,6 +34,4 @@ export const signInWithSession =
         })
       )
     }
-
-    return response
   }

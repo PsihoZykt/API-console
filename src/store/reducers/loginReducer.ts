@@ -7,7 +7,7 @@ import {
 
 export type AuthResult = {
   isError: boolean,
-  credentials?: Credentials,
+  credentials: Credentials | null,
   res: any,
 }
 export type LoginState = {
@@ -23,6 +23,7 @@ const initialState = {
   authResult: {
     isError: false,
     res: { id: '', explain: '', request: {} },
+    credentials: null,
   },
   isLoading: false,
   credentials: {

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { connect, ConnectedProps } from 'react-redux'
 import { formValueSelector } from 'redux-form'
 import LoginPage from './LoginPage'
-import { signIn } from 'store/thunks/loginThunks'
+import { signIn, signInWithSession } from 'store/thunks/loginThunks'
 import { getAuthResult, getIsLoading } from 'store/selectors/loginPage/selector'
 import { authWithSession } from 'api/sendsay'
 import { RootState } from 'store/store'
@@ -16,23 +16,16 @@ const LoginPageContainer = ({
   isLoading,
   authResult,
   signIn,
+  signInWithSession,
 }: PropsFromRedux) => {
   const navigate = useNavigate()
-  useEffect(() => {
-    authWithSession().then((res) => {
-      if (!res.isError) {
-        navigate('/console')
-      } else navigate('/')
-    })
-  }, [])
 
   const submit = (form: FormEvent<HTMLFormElement>) => {
     form.preventDefault()
-    signIn(login, sublogin, password).then((res) => {
-      if (!res.isError) {
-        navigate('console')
-      } else navigate('/')
-    })
+    signIn(login, sublogin, password)
+    if (!authResult.isError) {
+      navigate('/console')
+    } else navigate('/')
   }
 
   return (
@@ -60,6 +53,7 @@ const connector = connect(
   },
   {
     signIn,
+    signInWithSession,
   }
 )
 type PropsFromRedux = ConnectedProps<typeof connector>

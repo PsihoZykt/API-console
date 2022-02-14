@@ -13,7 +13,7 @@ const auth = async (login, sublogin, password) => {
     if (sublogin) localStorage.setItem('sublogin', sublogin)
     return { isError: false, credentials: { login, sublogin }, res }
   } catch (e) {
-    return { isError: true, res: e }
+    return { isError: true, credentials: null, res: e }
   }
 }
 const authWithSession = async () => {
@@ -27,7 +27,7 @@ const authWithSession = async () => {
     })
     return { isError: false, credentials: { login, sublogin }, res }
   } catch (e) {
-    return { isError: true, res: e }
+    return { isError: true, credentials: null, res: e }
   }
 }
 const makeRequest = async (body) => {
