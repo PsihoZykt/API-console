@@ -57,12 +57,5 @@ const logout = async () => {
     return { isError: true, res: e }
   }
 }
-const test = async () => {
-  const sendsay2 = new Sendsay()
 
-  const res = await sendsay2.request({
-    action: 'sys.settings.get',
-    session: localStorage.getItem('sendsay_session'),
-  })
-}
-export { auth, test, makeRequest, authWithSession, logout }
+export { auth, makeRequest, authWithSession, logout }

@@ -6,7 +6,6 @@ import {
   loginActions,
   LoginActionsType,
 } from 'store/actions/login/loginActions'
-import { useNavigate } from 'react-router-dom'
 
 export const signIn =
   (

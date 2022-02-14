@@ -26,7 +26,7 @@ const RenderField: React.FC<PropsType> = ({
       <label>
         {label}
         {optional && (
-          <span className="login-form__sublogin_optional"> Опционально </span>
+          <span className="login-form__input_optional">Опционально</span>
         )}
       </label>
       <div>

@@ -16,11 +16,13 @@
     height: 40px;
     color: white;
     border:0;
+    cursor: pointer;
 
 }
-.footer_format {
+.footer__format {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
+    cursor: pointer;
 }

@@ -7,7 +7,6 @@ import {
   consoleActions,
   ConsoleActionsType,
 } from 'store/actions/console/consoleActions'
-import { useNavigate } from 'react-router-dom'
 
 export const runRequest =
   (body: string): ThunkAction<void, RootState, unknown, ConsoleActionsType> =>

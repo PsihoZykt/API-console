@@ -5,7 +5,7 @@ import {DragElement} from "common/DragElement/DragElement";
 import {connect, ConnectedProps} from "react-redux";
 import {consoleActions} from "store/actions/console/consoleActions";
 import {runRequest} from "store/thunks/consoleThunks";
-
+import './ItemMenu.css'
 type OwnProps = {
   request: Request,
   leftOffset: number,
@@ -58,7 +58,7 @@ const ItemMenu = ({
     <div className="expand">
       <div
         ref={expandElementRef}
-        className="expand-element"
+        className="expand__icon"
       >
         <DragElement/>
         <div
@@ -69,13 +69,13 @@ const ItemMenu = ({
           className={`expand ${getExpandedClass()}`}
         >
           <div
-            className="expand-element__item expand-element__item-run"
+            className="expand__item run"
             onClick={onRun}
           >
             Запустить
           </div>
           <div
-            className={`expand-element__item expand-element__item-copy `}
+            className={`expand__item copy `}
             onClick={() => {
               setFade(true)
 
@@ -97,7 +97,7 @@ const ItemMenu = ({
           </div>
           <div className="delimiter"/>
           <div
-            className="expand-element__item expand-element__item-delete"
+            className="expand__item delete"
             onClick={onDelete}
           >
             Удалить

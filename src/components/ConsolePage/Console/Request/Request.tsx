@@ -1,14 +1,14 @@
 import React, {ChangeEvent, MutableRefObject, useRef} from 'react'
-import './Textarea.css'
+import 'components/ConsolePage/Console/Request/Request.css'
 import {DragElement} from 'common/DragElement/DragElement'
 import {connect, ConnectedProps} from "react-redux";
 import {getCurrentRequest, getIsRequestError, getRequestConsoleWIdth} from "store/selectors/consolePage/selector";
 import {RootState} from "store/store";
 import {consoleActions} from "store/actions/console/consoleActions";
-
+import './Request.css'
 type ReduxProps = ConnectedProps<typeof connector>
 type PropTypes = ReduxProps
-const Textarea = ({
+const Request = ({
                     currentRequest,
                     setRequestConsoleWidth,
                     requestConsoleWidth,
@@ -50,12 +50,12 @@ const Textarea = ({
     })
   }
   return (
-    <div className="console__request">
+    <div className="request">
       <div>Запрос</div>
 
-      <div ref={wrapperRef} style={{width: requestConsoleWidth + 'px'}} className={"console__request__textarea_wrapper"}>
+      <div ref={wrapperRef} style={{width: requestConsoleWidth + 'px'}} className={"textarea-wrapper"}>
     <textarea
-      className={`console__request__textarea ${getErrorClass(isRequestError)}`}
+      className={`request__textarea ${getErrorClass(isRequestError)}`}
       onChange={(e) => onChangeRequestText(e)}
       value={currentRequest.requestText}
     />
@@ -63,7 +63,7 @@ const Textarea = ({
         <div
           onMouseDown={(evt) => onDragMouseDown(evt)}
           ref={resizeDrag}
-          className="console__resizer"
+          className="resizer"
         >
           <DragElement/>
         </div>
@@ -82,4 +82,4 @@ const connector = connect(
   },
   {changeRequestText: consoleActions.changeRequestText, setRequestConsoleWidth: consoleActions.setRequestConsoleWidth}
 )
-export default connector(Textarea)
+export default connector(Request)

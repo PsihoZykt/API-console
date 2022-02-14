@@ -24,7 +24,6 @@ const LoginForm: React.FC<ReduxFormPropsType> =
          handleSubmit,
          authResult,
          isLoading,
-         submitting,
       valid
      }) => (
         <form onSubmit={(e) => handleSubmit(e)} className="login-form">

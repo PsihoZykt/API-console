@@ -28,7 +28,8 @@
     filter: none
 }
 
-.login-form__sublogin_optional {
+.login-form__input_optional {
+
     color: #999999;
     font-size: 12px;
     line-height: 20px;

@@ -33,7 +33,7 @@ const Footer = ({
         Отправить
       </button>
       <GithubLink />
-      <div className="footer_format">
+      <div className="footer__format">
         <img src={format} alt="some rectangles with different width" />
         <div onClick={() => onFormatting(currentRequest.requestText)}>
           Форматировать

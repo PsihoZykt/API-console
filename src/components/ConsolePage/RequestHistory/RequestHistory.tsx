@@ -1,12 +1,12 @@
 import { Request } from 'store/reducers/consoleReducer'
 import React, { useEffect, useRef, useState } from 'react'
-import RequestHistoryItem from 'components/ConsolePage/RequestHistory/RequestHistoryItem/RequestHistoryItemContainer'
 import './RequestHistory.css'
 import clear from 'assets/img/consolePage/clear.svg'
 import { connect, ConnectedProps } from 'react-redux'
 import { RootState } from 'store/store'
 import { getRequestHistory } from 'store/selectors/consolePage/selector'
 import { consoleActions } from 'store/actions/console/consoleActions'
+import RequestHistoryItem from 'components/ConsolePage/RequestHistory/RequestHistoryItem/RequestHistoryItem'
 
 type ReduxProps = ConnectedProps<typeof connector>
 type PropsType = ReduxProps
@@ -36,13 +36,13 @@ const RequestHistory = ({ requestHistory, clearRequestHistory }: PropsType) => {
     }
   }, [])
   const historyElement = requestHistory.map((request: Request) => (
-    <RequestHistoryItem request={request} />
+    <RequestHistoryItem key={request.id} request={request} />
   ))
   const onClearRequestHistory = () => {
     clearRequestHistory()
   }
   return (
-    <div className="history-relative">
+    <div className="history-wrapper">
       <div ref={elRef} className={`history `}>
         {historyElement}
       </div>

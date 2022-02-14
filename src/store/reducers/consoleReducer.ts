@@ -3,7 +3,6 @@ import {
   ChangeCurrentRequestActionType,
   ChangeRequestBodyActionType,
   ChangeRequestResponseType,
-  ClearRequestHistoryType,
   ConsoleActionsType,
   DeleteRequestActionType,
   IsRequestErrorType,
@@ -40,134 +39,7 @@ const initialState: ConsoleState = {
   isRequestError: false,
   isResponseError: false,
   requestConsoleWidth: 400,
-  requestHistory: [
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-    {
-      id: '1',
-      status: RequestStatus.NotSubmitted,
-      requestText: '{"action": "pong"}',
-      requestResponse: '{}',
-    },
-  ],
+  requestHistory: [],
   currentRequest: {
     id: '1',
     status: RequestStatus.NotSubmitted,
@@ -216,12 +88,11 @@ const addRequestToHistory = (
       0,
       newRequestHistory.splice(uniqRequestHistoryItemIndex, 1)[0]
     )
-  }
-  if (newRequestHistory.length < 15 && parsedActionText.action) {
-    newRequestHistory.push(action.payload)
+  } else if (newRequestHistory.length < 15 && parsedActionText.action) {
+    newRequestHistory.unshift(action.payload)
   }
   if (newRequestHistory.length >= 15 && parsedActionText.action) {
-    newRequestHistory.shift()
+    newRequestHistory.pop()
   }
 
   return {
@@ -238,10 +109,7 @@ const deleteRequest = (
     return request.id !== action.payload.id
   }),
 })
-const clearRequestHistory = (
-  state: ConsoleState,
-  action: ClearRequestHistoryType
-): ConsoleState => ({
+const clearRequestHistory = (state: ConsoleState): ConsoleState => ({
   ...state,
   requestHistory: [],
 })
@@ -296,7 +164,7 @@ export default function consoleReducer(
     case 'CHANGE_REQUEST_RESPONSE':
       return changeRequestResponse(state, action)
     case 'CLEAR_REQUEST_HISTORY':
-      return clearRequestHistory(state, action)
+      return clearRequestHistory(state)
     case 'SET_REQUEST_CONSOLE_WIDTH':
       return setRequestConsoleWidth(state, action)
     default:

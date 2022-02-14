@@ -10,7 +10,6 @@ import { getCredentials } from 'store/selectors/loginPage/selector'
 import { useNavigate } from 'react-router-dom'
 import { logout } from 'api/sendsay'
 import { FullScreenHandle } from 'react-full-screen'
-import { AuthResult } from 'store/reducers/loginReducer'
 
 type OwnProps = {
   fullScreen: FullScreenHandle,
@@ -47,7 +46,7 @@ const Header = ({ fullScreen, credentials }: PropsType) => {
         <img
           tabIndex={1}
           onClick={handleFullScreen}
-          className="header__exit_maximize"
+          className="header__exit header__exit_maximize"
           src={fullScreen.active ? minimize : maximize}
           alt="maximize icon"
         />
