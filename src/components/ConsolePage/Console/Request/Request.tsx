@@ -50,8 +50,8 @@ const Request = ({
     })
   }
   return (
-    <div className="request">
-      <div>Запрос</div>
+    <div className={`request`}>
+      <div className={`request__header ${getErrorClass(isRequestError)}`}>Запрос</div>
 
       <div ref={wrapperRef} style={{width: requestConsoleWidth + 'px'}} className={"textarea-wrapper"}>
     <textarea

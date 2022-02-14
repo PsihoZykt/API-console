@@ -12,7 +12,9 @@ const Response = ({ isResponseError, currentRequest }: PropTypes) => {
   const getErrorClass = (isError: boolean) => (isError ? 'error' : '')
   return (
     <div className={'response'}>
-      Ответ
+      <div className={`response__header ${getErrorClass(isResponseError)}`}>
+        Ответ
+      </div>
       <pre className={`response__field ${getErrorClass(isResponseError)}`}>
         {currentRequest.requestResponse}
       </pre>
