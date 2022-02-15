@@ -13,12 +13,12 @@ type PropsType = {
     isLoading: boolean,
 
 }
-type LoginProps = {
+export type LoginFormType = {
     password: string,
     sublogin: string,
     login: string,
 }
-type ReduxFormPropsType = InjectedFormProps<LoginProps, PropsType> & PropsType
+type ReduxFormPropsType = InjectedFormProps<LoginFormType, PropsType> & PropsType
 const LoginForm: React.FC<ReduxFormPropsType> =
     ({
          handleSubmit,
@@ -53,7 +53,7 @@ const LoginForm: React.FC<ReduxFormPropsType> =
             </button>
         </form>
 )}
-export default reduxForm<LoginProps, PropsType>({
+export default reduxForm<LoginFormType, PropsType>({
     form: 'login',
     validate,
 })(LoginForm)

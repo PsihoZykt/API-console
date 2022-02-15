@@ -1,19 +1,19 @@
 import './App.css'
 import React, { useEffect } from 'react'
-import { connect, ConnectedProps } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes, useNavigate } from 'react-router-dom'
-import { RootState } from './store/store'
-import LoginPage from './components/LoginPage/LoginPageContainer'
 import 'normalize.css'
 import { getAuthResult } from 'store/selectors/loginPage/selector'
 import { signInWithSession } from 'store/thunks/loginThunks'
 import ConsolePage from 'components/ConsolePage/ConsolePage'
+import { LoginPage } from 'components/LoginPage/LoginPage'
 
-type ReduxProps = ConnectedProps<typeof connector>
-const App: React.FC<ReduxProps> = ({ authResult, signInWithSession }) => {
+const App: React.FC = () => {
   const navigate = useNavigate()
+  const authResult = useSelector(getAuthResult)
+  const dispatch = useDispatch()
   useEffect(() => {
-    signInWithSession()
+    dispatch(signInWithSession())
   }, [])
   useEffect(() => {
     if (!authResult.isError && authResult.credentials) {
@@ -32,15 +32,4 @@ const App: React.FC<ReduxProps> = ({ authResult, signInWithSession }) => {
     </div>
   )
 }
-
-const connector = connect(
-  (state: RootState) => {
-    return {
-      authResult: getAuthResult(state),
-    }
-  },
-  {
-    signInWithSession: signInWithSession,
-  }
-)
-export default connector(App)
+export default App

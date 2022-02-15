@@ -33,7 +33,7 @@ export interface ConsoleState {
   currentRequest: Request;
 }
 
-const initialState: ConsoleState = {
+export const initialState: ConsoleState = {
   login: '',
   sublogin: '',
   isRequestError: false,
@@ -57,7 +57,6 @@ const changeRequestBody = (
     requestText: action.payload,
   },
 })
-
 const changeCurrentRequest = (
   state: ConsoleState,
   action: ChangeCurrentRequestActionType
