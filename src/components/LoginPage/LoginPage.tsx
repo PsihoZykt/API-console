@@ -22,7 +22,7 @@ export const LoginPage = () => {
   const dispatch = useDispatch()
   const submit = (form: FormEvent<HTMLFormElement>) => {
     form.preventDefault()
-    dispatch(signIn(login, sublogin, password))
+    dispatch({ type: 'SIGN_IN', payload: { login, sublogin, password } })
     if (!authResult.isError) {
       navigate('/console')
     }

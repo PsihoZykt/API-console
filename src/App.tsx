@@ -13,7 +13,7 @@ const App: React.FC = () => {
   const authResult = useSelector(getAuthResult)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(signInWithSession())
+    dispatch({ type: 'SIGN_IN_WITH_SESSION', payload: {} })
   }, [])
   useEffect(() => {
     if (!authResult.isError && authResult.credentials) {
