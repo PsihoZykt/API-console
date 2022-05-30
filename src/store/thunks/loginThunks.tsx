@@ -1,7 +1,6 @@
 import { auth, authWithSession } from 'api/sendsay'
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from 'store/store'
-import { AuthResult } from 'store/reducers/loginReducer'
 import {
   loginActions,
   LoginActionsType,
@@ -16,7 +15,9 @@ export const signIn =
   async (dispatch) => {
     dispatch(loginActions.setIsLoadingAction(true))
     const response = await auth(login, sublogin, password)
-    dispatch(loginActions.setCredentials({ login, sublogin }))
+    if (!response.isError) {
+      dispatch(loginActions.setCredentials({ login, sublogin }))
+    }
     dispatch(loginActions.setAuthResultAction(response))
     dispatch(loginActions.setIsLoadingAction(false))
   }
