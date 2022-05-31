@@ -7,13 +7,14 @@ import { getAuthResult } from 'store/selectors/loginPage/selector'
 import { signInWithSession } from 'store/thunks/loginThunks'
 import ConsolePage from 'components/ConsolePage/ConsolePage'
 import { LoginPage } from 'components/LoginPage/LoginPage'
+import { loginActions } from 'store/actions/login/loginActions'
 
 const App: React.FC = () => {
   const navigate = useNavigate()
   const authResult = useSelector(getAuthResult)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch({ type: 'SIGN_IN_WITH_SESSION', payload: {} })
+    dispatch(loginActions.loginWithSession())
   }, [])
   useEffect(() => {
     if (!authResult.isError && authResult.credentials) {

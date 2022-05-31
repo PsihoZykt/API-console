@@ -1,7 +1,7 @@
 import { createAction } from 'store/helpers/helper'
 import { Request } from 'store/reducers/consoleReducer'
 import { InferActionTypes } from 'store/store'
-
+export const RUN_REQUEST = 'RUN_REQUEST'
 export const consoleActions = {
   changeRequestText: (body: string) =>
     createAction('CHANGE_REQUEST_BODY', body),
@@ -22,6 +22,7 @@ export const consoleActions = {
   clearRequestHistory: () => createAction('CLEAR_REQUEST_HISTORY', null),
   setRequestConsoleWidth: (width: number) =>
     createAction('SET_REQUEST_CONSOLE_WIDTH', width),
+  runRequest: (body: string) => createAction(RUN_REQUEST, body),
 }
 export type ChangeRequestBodyActionType = ReturnType<
   typeof consoleActions.changeRequestText

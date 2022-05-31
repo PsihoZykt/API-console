@@ -1,10 +1,20 @@
-import { auth, authWithSession } from '../../api/sendsay'
-import { loginActions } from '../actions/login/loginActions'
+import { auth, authWithSession, makeRequest } from '../../api/sendsay'
+import {
+  LOGIN,
+  LOGIN_WITH_SESSION,
+  loginActions,
+} from '../actions/login/loginActions'
 import { call, put, takeEvery } from 'redux-saga/effects'
+import { consoleActions, RUN_REQUEST } from '../actions/console/consoleActions'
+import { RequestStatus } from '../reducers/consoleReducer'
+
+import { v4 as randomID } from 'uuid'
+import { act } from 'react-dom/test-utils'
 
 export default function* rootSaga() {
-  yield takeEvery('SIGN_IN', loginSaga)
-  yield takeEvery('SIGN_IN_WITH_SESSION', loginWithSessionSaga)
+  yield takeEvery(LOGIN, loginSaga)
+  yield takeEvery(LOGIN_WITH_SESSION, loginWithSessionSaga)
+  yield takeEvery(RUN_REQUEST, runRequestSaga)
 }
 
 function* loginSaga(action) {
@@ -16,8 +26,7 @@ function* loginSaga(action) {
       action.payload.sublogin,
       action.payload.password
     )
-    console.log('RESPONSE')
-    console.log(response)
+
     if (!response.hasError) {
       yield put(
         loginActions.setCredentials({
@@ -43,5 +52,32 @@ function* loginWithSessionSaga() {
         sublogin: response.credentials.sublogin,
       })
     )
+  }
+}
+
+function* runRequestSaga(action) {
+  console.log(action.payload)
+  let request
+  try {
+    request = yield call(JSON.parse, action.payload)
+    console.log(request)
+    yield put(consoleActions.setIsRequestError(false))
+  } catch (e) {
+    yield put(consoleActions.setIsRequestError(true))
+  }
+  if (request) {
+    const response = yield call(makeRequest, action.payload)
+    const isSuccessful = !!(response.res._ehid ?? false)
+    const status = isSuccessful
+      ? RequestStatus.Successful
+      : RequestStatus.Unsuccessful
+    const id = randomID()
+    const requestText = action.payload
+
+    const requestResponse = JSON.stringify(response, null, 4)
+    const newRequest = { status, id, requestText, requestResponse }
+    yield put(consoleActions.setIsRequestError(!isSuccessful))
+    yield put(consoleActions.changeCurrentRequest(newRequest))
+    yield put(consoleActions.addRequestToHistory(newRequest))
   }
 }

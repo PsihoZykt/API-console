@@ -2,7 +2,7 @@ import GithubLink from 'common/GithubLink/GithubLink'
 import format from 'assets/img/consolePage/format.svg'
 import React from 'react'
 import './Footer.css'
-import { connect, ConnectedProps } from 'react-redux'
+import { connect, ConnectedProps, useDispatch } from 'react-redux'
 import { RootState } from 'store/store'
 import { getCurrentRequest } from 'store/selectors/consolePage/selector'
 import { consoleActions } from 'store/actions/console/consoleActions'
@@ -11,17 +11,14 @@ import { getFormattedJSON } from 'helpers/json/format'
 
 type ReduxProps = ConnectedProps<typeof connector>
 type PropsType = ReduxProps
-const Footer = ({
-  changeRequestBody,
-  currentRequest,
-  runRequest,
-}: PropsType) => {
+const Footer = ({ changeRequestBody, currentRequest }: PropsType) => {
   const onFormatting = (body: string) => {
     changeRequestBody(getFormattedJSON(body))
   }
-
+  const dispatch = useDispatch()
   const onSubmitRequest = async (body: string) => {
-    runRequest(body)
+    console.log(body)
+    dispatch(consoleActions.runRequest(body))
   }
 
   return (
@@ -52,7 +49,6 @@ const connector = connect(
   },
   {
     changeRequestBody: consoleActions.changeRequestText,
-    runRequest: runRequest,
   }
 )
 export default connector(Footer)

@@ -18,6 +18,7 @@ export type LoginState = {
 export type Credentials = {
   login: string | null,
   sublogin: string | null,
+  password?: string | null,
 }
 const initialState = {
   authResult: {

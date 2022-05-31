@@ -1,7 +1,8 @@
 import { createAction } from 'store/helpers/helper'
 import { AuthResult, Credentials } from 'store/reducers/loginReducer'
 import { InferActionTypes } from 'store/store'
-
+export const LOGIN = 'LOGIN'
+export const LOGIN_WITH_SESSION = 'LOGIN_WITH_SESSION'
 export const loginActions = {
   setIsLoadingAction: (isLoading: boolean) => {
     return createAction('SET_IS_LOADING', isLoading)
@@ -11,6 +12,12 @@ export const loginActions = {
   },
   setCredentials: (credentials: Credentials) => {
     return createAction('SET_CREDENTIALS', credentials)
+  },
+  login: (credentials: Credentials) => {
+    return createAction(LOGIN, credentials)
+  },
+  loginWithSession: () => {
+    return createAction(LOGIN_WITH_SESSION, null)
   },
 }
 export type SetIsLoadingType = ReturnType<

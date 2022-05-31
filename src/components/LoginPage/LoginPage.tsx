@@ -8,6 +8,7 @@ import Logo from 'common/Logo/Logo'
 import LoginForm from 'components/LoginPage/LoginForm/LoginForm'
 import GithubLink from 'common/GithubLink/GithubLink'
 import { signIn } from 'store/thunks/loginThunks'
+import { loginActions } from 'store/actions/login/loginActions'
 
 export const LoginPage = () => {
   const navigate = useNavigate()
@@ -22,7 +23,7 @@ export const LoginPage = () => {
   const dispatch = useDispatch()
   const submit = (form: FormEvent<HTMLFormElement>) => {
     form.preventDefault()
-    dispatch({ type: 'SIGN_IN', payload: { login, sublogin, password } })
+    dispatch(loginActions.login({ login, sublogin, password }))
     if (!authResult.isError) {
       navigate('/console')
     }
