@@ -51,4 +51,5 @@ export type ClearRequestHistoryType = ReturnType<
 export type SetRequestConsoleWidthType = ReturnType<
   typeof consoleActions.setRequestConsoleWidth
 >
+export type RunRequestType = ReturnType<typeof consoleActions.runRequest>
 export type ConsoleActionsType = InferActionTypes<typeof consoleActions>

@@ -26,6 +26,10 @@ export type SetIsLoadingType = ReturnType<
 export type SetAuthResultType = ReturnType<
   typeof loginActions.setAuthResultAction
 >
+export type LoginType = ReturnType<typeof loginActions.login>
+export type LoginWithSessionType = ReturnType<
+  typeof loginActions.loginWithSession
+>
 export type SetCredentialsType = ReturnType<typeof loginActions.setCredentials>
 
 export type LoginActionsType = InferActionTypes<typeof loginActions>

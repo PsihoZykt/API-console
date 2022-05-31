@@ -6,4 +6,7 @@ module.exports = {
   env: {
     browser: true,
   },
+  rules: {
+    '@typescript-eslint/ban-ts-comment': 'off',
+  },
 }

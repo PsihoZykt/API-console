@@ -1,12 +1,13 @@
+// @ts-nocheck
 import thunk, {ThunkDispatch} from 'redux-thunk'
 import configureStore from 'redux-mock-store'
-import * as sendsayAPI from '../api/sendsay'
+import * as sendsayAPI from 'api/sendsay'
 import {AuthResult, Credentials} from 'store/reducers/loginReducer'
 import {signIn, signInWithSession} from 'store/thunks/loginThunks'
 import {AnyAction} from "redux";
 import {RootState} from "store/store";
 import {loginActions} from "store/actions/login/loginActions";
-import {makeRequest} from "../api/sendsay";
+import {makeRequest} from "api/sendsay";
 import {runRequest} from "store/thunks/consoleThunks";
 import {consoleActions} from "store/actions/console/consoleActions";
 import {Request, RequestStatus} from "store/reducers/consoleReducer";

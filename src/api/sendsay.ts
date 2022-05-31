@@ -1,5 +1,22 @@
+// @ts-ignore
 import Sendsay from 'sendsay-api'
-const auth = async (login, sublogin, password) => {
+
+export type RequestType = {
+  isError: boolean,
+  res: any,
+}
+export type AuthType = {
+  credentials: {
+    login: string,
+    sublogin: string,
+    password?: string,
+  } | null,
+}
+const auth = async (
+  login: string,
+  sublogin: string,
+  password?: string
+): Promise<AuthType & RequestType> => {
   const sendsay = new Sendsay()
   try {
     const res = await sendsay.request({
@@ -16,7 +33,7 @@ const auth = async (login, sublogin, password) => {
     return { isError: true, credentials: null, res: e }
   }
 }
-const authWithSession = async () => {
+const authWithSession = async (): Promise<AuthType & RequestType> => {
   const sendsay = new Sendsay()
   const login = localStorage.getItem('login')
   const sublogin = localStorage.getItem('sublogin')
@@ -25,13 +42,15 @@ const authWithSession = async () => {
       action: 'pong',
       session: localStorage.getItem('sendsay_session'),
     })
-    return { isError: false, credentials: { login, sublogin }, res }
+    if (login !== null && sublogin !== null) {
+      return { isError: false, credentials: { login, sublogin }, res }
+    } else throw new Error('Some auth with session problem')
   } catch (e) {
     return { isError: true, credentials: null, res: e }
   }
 }
-const makeRequest = async (body) => {
-  let request = JSON.parse(body)
+const makeRequest = async (body: string): Promise<RequestType> => {
+  const request = JSON.parse(body)
   const sendsay = new Sendsay()
   try {
     const res = await sendsay.request({
@@ -43,7 +62,7 @@ const makeRequest = async (body) => {
     return { isError: true, res: e }
   }
 }
-const logout = async () => {
+const logout = async (): Promise<RequestType> => {
   const sendsay = new Sendsay()
   try {
     const res = await sendsay.request({

@@ -1,15 +1,22 @@
-import { auth, authWithSession, makeRequest } from '../../api/sendsay'
+import {
+  auth,
+  AuthType,
+  authWithSession,
+  makeRequest,
+  RequestType,
+} from 'api/sendsay'
 import {
   LOGIN,
   LOGIN_WITH_SESSION,
   loginActions,
+  LoginType,
 } from '../actions/login/loginActions'
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { consoleActions, RUN_REQUEST } from '../actions/console/consoleActions'
 import { RequestStatus } from '../reducers/consoleReducer'
 
 import { v4 as randomID } from 'uuid'
-import { act } from 'react-dom/test-utils'
+import { AnyAction } from 'redux'
 
 export default function* rootSaga() {
   yield takeEvery(LOGIN, loginSaga)
@@ -17,17 +24,17 @@ export default function* rootSaga() {
   yield takeEvery(RUN_REQUEST, runRequestSaga)
 }
 
-function* loginSaga(action) {
+function* loginSaga(action: AnyAction): Generator<any, void | null, LoginType> {
   try {
     yield put(loginActions.setIsLoadingAction(true))
-    const response = yield call(
+    const response: any = yield call(
       auth,
       action.payload.login,
       action.payload.sublogin,
       action.payload.password
     )
 
-    if (!response.hasError) {
+    if (!response.isError) {
       yield put(
         loginActions.setCredentials({
           login: action.payload.login,
@@ -42,8 +49,8 @@ function* loginSaga(action) {
   }
 }
 
-function* loginWithSessionSaga() {
-  const response = yield call(authWithSession)
+function* loginWithSessionSaga(): Generator<any, void, AuthType & RequestType> {
+  const response: AuthType & RequestType = yield call(authWithSession)
   yield put(loginActions.setAuthResultAction(response))
   if (!response.isError && response.credentials) {
     yield put(
@@ -55,8 +62,7 @@ function* loginWithSessionSaga() {
   }
 }
 
-function* runRequestSaga(action) {
-  console.log(action.payload)
+function* runRequestSaga(action: AnyAction): Generator<any, void, RequestType> {
   let request
   try {
     request = yield call(JSON.parse, action.payload)
