@@ -36,7 +36,7 @@ const auth = async (
 const authWithSession = async (): Promise<AuthType> => {
   const sendsay = new Sendsay()
   const login = localStorage.getItem('login')
-  const sublogin = localStorage.getItem('login')
+  const sublogin = localStorage.getItem('login') // Actually, I don't remember how it should work, so it's just mock
   try {
     const res = await sendsay.request({
       action: 'pong',
