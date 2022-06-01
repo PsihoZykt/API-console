@@ -11,19 +11,19 @@
     cursor: pointer;
 }
 
-@mixin history__item_status {
+@mixin history__item_status ($color){
     width: 10px;
     height: 10px;
     border-radius: 50%;
+    background-color: $color;
 }
-
+$unsuccessful_color: #CF2C00;
+$successful_color: #30B800;
 .history__item {
     .status_unsuccessful {
-        background-color: #CF2C00;
-        @include history__item_status
+        @include history__item_status($successful_color)
     }
     .status_successful {
-        background-color: #30B800;
-        @include history__item_status
+        @include history__item_status($unsuccessful_color)
     }
 }
