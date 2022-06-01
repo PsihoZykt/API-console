@@ -1,11 +1,11 @@
 import React, {ChangeEvent, MutableRefObject, useRef} from 'react'
-import 'components/ConsolePage/Console/Request/Request.css'
+import 'components/ConsolePage/Console/Request/Request.scss'
 import {DragElement} from 'common/DragElement/DragElement'
 import {connect, ConnectedProps} from "react-redux";
 import {getCurrentRequest, getIsRequestError, getRequestConsoleWIdth} from "store/selectors/consolePage/selector";
 import {RootState} from "store/store";
 import {consoleActions} from "store/actions/console/consoleActions";
-import './Request.css'
+import 'components/ConsolePage/Console/Request/Request.scss'
 type ReduxProps = ConnectedProps<typeof connector>
 type PropTypes = ReduxProps
 const Request = ({

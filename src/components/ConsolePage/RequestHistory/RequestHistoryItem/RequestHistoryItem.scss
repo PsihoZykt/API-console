@@ -1,3 +1,4 @@
+
 .history__item {
     display: flex;
     gap: 5px;
@@ -10,17 +11,19 @@
     cursor: pointer;
 }
 
-.history__item .status_unsuccessful {
+@mixin history__item_status {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #CF2C00;
-
 }
 
-.history__item .status_successful {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #30B800;
+.history__item {
+    .status_unsuccessful {
+        background-color: #CF2C00;
+        @include history__item_status
+    }
+    .status_successful {
+        background-color: #30B800;
+        @include history__item_status
+    }
 }

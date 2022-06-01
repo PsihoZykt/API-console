@@ -1,5 +1,5 @@
 import { Request, RequestStatus } from 'store/reducers/consoleReducer'
-import './RequestHistoryItem.css'
+import 'components/ConsolePage/RequestHistory/RequestHistoryItem/RequestHistoryItem.scss'
 import React, { useRef, useState } from 'react'
 import ItemMenu from 'components/ConsolePage/RequestHistory/RequestHistoryItem/ItemMenu/ItemMenu'
 import { getFormattedJSON } from 'helpers/json/format'
