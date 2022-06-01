@@ -1,16 +1,16 @@
 // @ts-ignore
 import Sendsay from 'sendsay-api'
 
-export type RequestType = {
-  isError: boolean,
-  res: any,
+export interface RequestType {
+  isError: boolean;
+  res: any;
 }
-export type AuthType = {
+export interface AuthType extends RequestType {
   credentials: {
     login: string,
     sublogin: string,
     password?: string,
-  } | null,
+  } | null;
 }
 const auth = async (
   login: string,
@@ -33,10 +33,10 @@ const auth = async (
     return { isError: true, credentials: null, res: e }
   }
 }
-const authWithSession = async (): Promise<AuthType & RequestType> => {
+const authWithSession = async (): Promise<AuthType> => {
   const sendsay = new Sendsay()
   const login = localStorage.getItem('login')
-  const sublogin = localStorage.getItem('sublogin')
+  const sublogin = localStorage.getItem('login')
   try {
     const res = await sendsay.request({
       action: 'pong',

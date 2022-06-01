@@ -1,22 +1,23 @@
-import {
-  auth,
-  AuthType,
-  authWithSession,
-  makeRequest,
-  RequestType,
-} from 'api/sendsay'
+import {auth, AuthType, authWithSession, makeRequest, RequestType,} from 'api/sendsay'
 import {
   LOGIN,
   LOGIN_WITH_SESSION,
   loginActions,
-  LoginType,
+  SetAuthResultType,
+  SetCredentialsType,
+  SetIsLoadingType,
 } from '../actions/login/loginActions'
-import { call, put, takeEvery } from 'redux-saga/effects'
-import { consoleActions, RUN_REQUEST } from '../actions/console/consoleActions'
-import { RequestStatus } from '../reducers/consoleReducer'
+import {call, CallEffect, put, PutEffect, takeEvery} from 'redux-saga/effects'
+import {
+  AddRequestToHistoryType,
+  ChangeCurrentRequestActionType,
+  consoleActions,
+  IsRequestErrorType,
+  RUN_REQUEST
+} from '../actions/console/consoleActions'
+import {RequestStatus} from '../reducers/consoleReducer'
 
-import { v4 as randomID } from 'uuid'
-import { AnyAction } from 'redux'
+import {v4 as randomID} from 'uuid'
 
 export default function* rootSaga() {
   yield takeEvery(LOGIN, loginSaga)
@@ -24,21 +25,28 @@ export default function* rootSaga() {
   yield takeEvery(RUN_REQUEST, runRequestSaga)
 }
 
-function* loginSaga(action: AnyAction): Generator<any, void | null, LoginType> {
+function* loginSaga(
+  {
+    payload: {login, sublogin, password}
+  }: { type: typeof loginActions.login, payload: { login: string, sublogin: string, password: string } }
+): Generator<| PutEffect<SetIsLoadingType | SetCredentialsType | SetAuthResultType>
+  | CallEffect<AuthType>,
+  void | null,
+  AuthType> {
   try {
     yield put(loginActions.setIsLoadingAction(true))
-    const response: any = yield call(
+    const response: AuthType = yield call(
       auth,
-      action.payload.login,
-      action.payload.sublogin,
-      action.payload.password
+      login,
+      sublogin,
+      password
     )
 
     if (!response.isError) {
       yield put(
         loginActions.setCredentials({
-          login: action.payload.login,
-          sublogin: action.payload.sublogin,
+          login,
+          sublogin
         })
       )
     }
@@ -49,8 +57,10 @@ function* loginSaga(action: AnyAction): Generator<any, void | null, LoginType> {
   }
 }
 
-function* loginWithSessionSaga(): Generator<any, void, AuthType & RequestType> {
-  const response: AuthType & RequestType = yield call(authWithSession)
+function* loginWithSessionSaga(): Generator<CallEffect<AuthType> | PutEffect<SetAuthResultType | SetCredentialsType>,
+  void,
+  AuthType> {
+  const response: AuthType = yield call(authWithSession)
   yield put(loginActions.setAuthResultAction(response))
   if (!response.isError && response.credentials) {
     yield put(
@@ -62,23 +72,26 @@ function* loginWithSessionSaga(): Generator<any, void, AuthType & RequestType> {
   }
 }
 
-function* runRequestSaga(action: AnyAction): Generator<any, void, RequestType> {
+function* runRequestSaga({payload}: {
+  type: typeof consoleActions.runRequest
+  payload: string
+}): Generator<CallEffect<string | unknown> | PutEffect<IsRequestErrorType | ChangeCurrentRequestActionType | AddRequestToHistoryType>, void, RequestType> {
   let request
   try {
-    request = yield call(JSON.parse, action.payload)
+    request = yield call(JSON.parse, payload)
     console.log(request)
     yield put(consoleActions.setIsRequestError(false))
   } catch (e) {
     yield put(consoleActions.setIsRequestError(true))
   }
   if (request) {
-    const response = yield call(makeRequest, action.payload)
+    const response = yield call(makeRequest, payload)
     const isSuccessful = !!(response.res._ehid ?? false)
     const status = isSuccessful
       ? RequestStatus.Successful
       : RequestStatus.Unsuccessful
     const id = randomID()
-    const requestText = action.payload
+    const requestText = payload
 
     const requestResponse = JSON.stringify(response, null, 4)
     const newRequest = { status, id, requestText, requestResponse }
