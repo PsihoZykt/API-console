@@ -3,6 +3,7 @@
     display: flex;
     flex-flow: column nowrap;
     gap: 3px;
+
 }
 
 .drag-element_circle {
@@ -11,3 +12,4 @@
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.2);
 }
+

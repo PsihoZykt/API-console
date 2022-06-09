@@ -18,15 +18,15 @@ const RenderField: React.FC<PropsType> = ({
 }: PropsType) => {
   const errorClass =
     touched && error
-      ? 'login-form_input login-form_input_error'
-      : 'login-form_input'
+      ? 'login-form__input login-form__input_error'
+      : 'login-form__input'
 
   return (
     <div>
       <label>
         {label}
         {optional && (
-          <span className="login-form__sublogin_optional"> Опционально </span>
+          <span className="login-form__input_optional">Опционально</span>
         )}
       </label>
       <div>

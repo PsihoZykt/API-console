@@ -1,17 +1,35 @@
-.login-form_input {
+.login-form__input {
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     border-radius: 5px;
     width: 460px;
     height: 40px;
+    padding-left: 10px;
     margin-top: 10px;
     margin-bottom: 20px;
 }
-.login-form_input_error {
+
+.login-form__input:hover {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.login-form__input:focus {
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 7px;
+}
+
+.login-form__input_error {
     border: 1px solid #CF2C00;
     box-shadow: 0 0 5px rgba(207, 44, 0, 0.5);
 }
-.login-form__sublogin_optional {
+/*Disable autofill color*/
+.login-form__input{
+    filter: none
+}
+
+.login-form__input_optional {
+
     color: #999999;
     font-size: 12px;
     line-height: 20px;

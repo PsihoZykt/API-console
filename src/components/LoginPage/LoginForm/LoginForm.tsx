@@ -13,19 +13,21 @@ type PropsType = {
     isLoading: boolean,
 
 }
-type LoginProps = {
+export type LoginFormType = {
     password: string,
     sublogin: string,
     login: string,
 }
-type ReduxFormPropsType = InjectedFormProps<LoginProps, PropsType> & PropsType
+type ReduxFormPropsType = InjectedFormProps<LoginFormType, PropsType> & PropsType
 const LoginForm: React.FC<ReduxFormPropsType> =
     ({
          handleSubmit,
          authResult,
          isLoading,
-         submitting,
-     }) => (
+      valid
+     }) => {
+  console.log(authResult)
+  return(
         <form onSubmit={(e) => handleSubmit(e)} className="login-form">
             <div className="login-form__header">API-консолька</div>
             {authResult.isError && <FormError error={authResult.res}/>}
@@ -46,12 +48,12 @@ const LoginForm: React.FC<ReduxFormPropsType> =
                 name="password"
             />
 
-            <button disabled={submitting} type="submit" className="login-form__submit">
+            <button disabled={!valid} type="submit" className="login-form__submit">
                 {isLoading ? <Loader/> : 'Войти'}
             </button>
         </form>
-)
-export default reduxForm<LoginProps, PropsType>({
+)}
+export default reduxForm<LoginFormType, PropsType>({
     form: 'login',
     validate,
 })(LoginForm)

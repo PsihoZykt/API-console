@@ -1,12 +1,8 @@
 import { createAction } from 'store/helpers/helper'
-import { AuthResult } from 'store/reducers/loginReducer'
+import { AuthResult, Credentials } from 'store/reducers/loginReducer'
 import { InferActionTypes } from 'store/store'
-
-// export const SET_AUTH_RESULT = 'SET_AUTH_RESULT'
-// export const SET_IS_LOADING = 'SET_IS_LOADING'
-// export type SetAuthResultAction = Action<typeof SET_AUTH_RESULT, AuthResult>
-// export type SetIsLoadingAction = Action<typeof SET_IS_LOADING, boolean>
-
+export const LOGIN = 'LOGIN'
+export const LOGIN_WITH_SESSION = 'LOGIN_WITH_SESSION'
 export const loginActions = {
   setIsLoadingAction: (isLoading: boolean) => {
     return createAction('SET_IS_LOADING', isLoading)
@@ -14,12 +10,26 @@ export const loginActions = {
   setAuthResultAction: (authResult: AuthResult) => {
     return createAction('SET_AUTH_RESULT', authResult)
   },
+  setCredentials: (credentials: Credentials) => {
+    return createAction('SET_CREDENTIALS', credentials)
+  },
+  login: (credentials: Credentials) => {
+    return createAction(LOGIN, credentials)
+  },
+  loginWithSession: () => {
+    return createAction(LOGIN_WITH_SESSION, null)
+  },
 }
-export type SetIsLoadingActionType = ReturnType<
+export type SetIsLoadingType = ReturnType<
+  typeof loginActions.setIsLoadingAction
+>
+export type SetAuthResultType = ReturnType<
   typeof loginActions.setAuthResultAction
 >
-export type SetAuthResultActionType = ReturnType<
-  typeof loginActions.setAuthResultAction
+export type LoginType = ReturnType<typeof loginActions.login>
+export type LoginWithSessionType = ReturnType<
+  typeof loginActions.loginWithSession
 >
+export type SetCredentialsType = ReturnType<typeof loginActions.setCredentials>
 
 export type LoginActionsType = InferActionTypes<typeof loginActions>

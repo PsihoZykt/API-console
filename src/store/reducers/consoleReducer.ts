@@ -1,9 +1,13 @@
 import {
+  AddRequestToHistoryType,
   ChangeCurrentRequestActionType,
   ChangeRequestBodyActionType,
+  ChangeRequestResponseType,
   ConsoleActionsType,
   DeleteRequestActionType,
-  SubmitRequestActionType,
+  IsRequestErrorType,
+  IsResponseErrorType,
+  SetRequestConsoleWidthType,
 } from 'store/actions/console/consoleActions'
 
 export enum RequestStatus {
@@ -22,13 +26,19 @@ export interface Request {
 export interface ConsoleState {
   login: string;
   sublogin: string;
+  isRequestError: boolean;
+  isResponseError: boolean;
+  requestConsoleWidth: number;
   requestHistory: Request[];
   currentRequest: Request;
 }
 
-const initialState: ConsoleState = {
+export const initialState: ConsoleState = {
   login: '',
   sublogin: '',
+  isRequestError: false,
+  isResponseError: false,
+  requestConsoleWidth: 400,
   requestHistory: [],
   currentRequest: {
     id: '1',
@@ -47,7 +57,6 @@ const changeRequestBody = (
     requestText: action.payload,
   },
 })
-
 const changeCurrentRequest = (
   state: ConsoleState,
   action: ChangeCurrentRequestActionType
@@ -56,13 +65,40 @@ const changeCurrentRequest = (
   currentRequest: action.payload,
 })
 
-const submitRequest = (
+const addRequestToHistory = (
   state: ConsoleState,
-  action: SubmitRequestActionType
-): ConsoleState => ({
-  ...state,
-  requestHistory: [...state.requestHistory, action.payload],
-})
+  action: AddRequestToHistoryType
+): ConsoleState => {
+  const newRequestHistory = [...state.requestHistory]
+
+  let uniqRequestHistoryItemIndex = 0
+  const parsedActionText = JSON.parse(action.payload.requestText)
+
+  const uniqRequestHistoryItem = newRequestHistory.find((request, index) => {
+    const parsedRequestText = JSON.parse(request.requestText)
+    if (parsedRequestText.action === parsedActionText.action) {
+      uniqRequestHistoryItemIndex = index
+      return request
+    }
+  })
+  if (uniqRequestHistoryItem) {
+    newRequestHistory.splice(
+      0,
+      0,
+      newRequestHistory.splice(uniqRequestHistoryItemIndex, 1)[0]
+    )
+  } else if (newRequestHistory.length < 15 && parsedActionText.action) {
+    newRequestHistory.unshift(action.payload)
+  }
+  if (newRequestHistory.length >= 15 && parsedActionText.action) {
+    newRequestHistory.pop()
+  }
+
+  return {
+    ...state,
+    requestHistory: newRequestHistory,
+  }
+}
 const deleteRequest = (
   state: ConsoleState,
   action: DeleteRequestActionType
@@ -72,7 +108,41 @@ const deleteRequest = (
     return request.id !== action.payload.id
   }),
 })
-
+const clearRequestHistory = (state: ConsoleState): ConsoleState => ({
+  ...state,
+  requestHistory: [],
+})
+const setIsRequestError = (
+  state: ConsoleState,
+  action: IsRequestErrorType
+): ConsoleState => ({
+  ...state,
+  isRequestError: action.payload,
+})
+const setIsResponseError = (
+  state: ConsoleState,
+  action: IsResponseErrorType
+): ConsoleState => ({
+  ...state,
+  isResponseError: action.payload,
+})
+const changeRequestResponse = (
+  state: ConsoleState,
+  action: ChangeRequestResponseType
+): ConsoleState => ({
+  ...state,
+  currentRequest: {
+    ...state.currentRequest,
+    requestResponse: action.payload,
+  },
+})
+const setRequestConsoleWidth = (
+  state: ConsoleState,
+  action: SetRequestConsoleWidthType
+): ConsoleState => ({
+  ...state,
+  requestConsoleWidth: action.payload,
+})
 export default function consoleReducer(
   state = initialState,
   action: ConsoleActionsType
@@ -82,10 +152,20 @@ export default function consoleReducer(
       return changeRequestBody(state, action)
     case 'CHANGE_CURRENT_REQUEST':
       return changeCurrentRequest(state, action)
-    case 'SUBMIT_REQUEST':
-      return submitRequest(state, action)
+    case 'ADD_REQUEST_TO_HISTORY':
+      return addRequestToHistory(state, action)
     case 'DELETE_REQUEST':
       return deleteRequest(state, action)
+    case 'SET_IS_REQUEST_ERROR':
+      return setIsRequestError(state, action)
+    case 'SET_IS_RESPONSE_ERROR':
+      return setIsResponseError(state, action)
+    case 'CHANGE_REQUEST_RESPONSE':
+      return changeRequestResponse(state, action)
+    case 'CLEAR_REQUEST_HISTORY':
+      return clearRequestHistory(state)
+    case 'SET_REQUEST_CONSOLE_WIDTH':
+      return setRequestConsoleWidth(state, action)
     default:
       return state
   }

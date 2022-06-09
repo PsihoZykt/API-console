@@ -1,43 +1,13 @@
-.error {
-    border: 1px solid red;
-}
+
 
 .console {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
+    background-color: white;
+    /*padding: 10px 15px 15px 15px;*/
+box-sizing: border-box;
 
 }
 
-.console__request_input {
-    width: 100%;
-    height: 95%;
-    appearance: none;
-    border: 1px solid black;
-    padding: 10px;
-    box-sizing: border-box;
-    resize: none;
-
-}
-
-.console__request_input, .console__response_field {
-    height: 80vh;
-}
-
-.console__response {
-    overflow-x: auto;
-    margin: 0;
-    width: 100%;
-
-}
-
-.console__response_field {
-    border: 1px solid black;
-    margin: 0;
-    resize: horizontal;
-    box-sizing: border-box;
-    padding: 10px;
-
-
-}
 

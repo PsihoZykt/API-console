@@ -1,8 +1,6 @@
 .login-page {
-    background: #F7F7F7;
     width: 960px;
-    height: 870px;
-    margin: 0 auto;
+    margin: 50px auto;
     display: flex;
     justify-content: center;
     align-items: center;

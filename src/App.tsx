@@ -1,22 +1,36 @@
 import './App.css'
-import React from 'react'
-import { Provider } from 'react-redux'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import store from './store/store'
-import LoginPage from './components/LoginPage/LoginPageContainer'
-import ConsolePage from './components/ConsolePage/ConsolePageContainer'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Route, Routes, useNavigate } from 'react-router-dom'
+import 'normalize.css'
+import { getAuthResult } from 'store/selectors/loginPage/selector'
+import { signInWithSession } from 'store/thunks/loginThunks'
+import ConsolePage from 'components/ConsolePage/ConsolePage'
+import { LoginPage } from 'components/LoginPage/LoginPage'
+import { loginActions } from 'store/actions/login/loginActions'
 
-const App = () => (
-  <div className="App">
-    <BrowserRouter>
-      <Provider store={store}>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/console" element={<ConsolePage />} />
-        </Routes>
-      </Provider>
-    </BrowserRouter>
-  </div>
-)
+const App: React.FC = () => {
+  const navigate = useNavigate()
+  const authResult = useSelector(getAuthResult)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(loginActions.loginWithSession())
+  }, [])
+  useEffect(() => {
+    if (!authResult.isError && authResult.credentials) {
+      navigate('/console')
+    } else {
+      navigate('/')
+    }
+  }, [authResult])
 
+  return (
+    <div className="app">
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/console" element={<ConsolePage />} />
+      </Routes>
+    </div>
+  )
+}
 export default App
